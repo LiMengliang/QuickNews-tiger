@@ -25,7 +25,7 @@ import java.io.File;
 public class App extends Application {
     private static App mAppApplication;
     private SQLHelper sqlHelper;
-
+//
     @Override
     public void onCreate() {
         super.onCreate();
