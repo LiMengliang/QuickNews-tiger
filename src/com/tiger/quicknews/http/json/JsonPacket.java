@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 北京活动时文化传媒有限公司
+ * Copyright (C) 2013 
  * 
  *             http://www.mosh.cn
  * 

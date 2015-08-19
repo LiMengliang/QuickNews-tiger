@@ -111,7 +111,7 @@ public class WeatherActivity extends BaseActivity implements ResponseData {
     public void setBack(String cityName) {
         if (cityName.equals("北京")) {
             mLayout.setBackgroundResource(R.drawable.biz_plugin_weather_beijin_bg);
-        } else if (cityName.equals("上海")) {
+        } else if (cityName.equals("北京")) {
             mLayout.setBackgroundResource(R.drawable.biz_plugin_weather_shanghai_bg);
         } else if (cityName.equals("广州")) {
             mLayout.setBackgroundResource(R.drawable.biz_plugin_weather_guangzhou_bg);

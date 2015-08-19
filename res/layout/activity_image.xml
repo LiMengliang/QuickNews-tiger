@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/new_title"
         android:layout_centerHorizontal="true"
-        flipview:orientation="vertical"
+        flipview:orientation="horizontal"
         tools:context="om.tiger.quicknews.activity.ImageDetailActivity" >
 
     </com.tiger.quicknews.wedget.flipview.FlipView>

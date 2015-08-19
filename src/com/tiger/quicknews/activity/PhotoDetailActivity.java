@@ -54,7 +54,7 @@ public class PhotoDetailActivity extends BaseActivity implements OnFlipListener,
             mFlipView.setOnFlipListener(this);
             mFlipView.setAdapter(photoDetailAdapter);
             mFlipView.peakNext(false);
-            mFlipView.setOverFlipMode(OverFlipMode.RUBBER_BAND);
+            mFlipView.setOverFlipMode(OverFlipMode.GLOW);
             mFlipView.setOnOverFlipListener(this);
         } catch (Exception e) {
             e.printStackTrace();

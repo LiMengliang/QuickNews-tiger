@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:textSize="18sp"
-        android:layout_margin="15dip"
+        android:layout_margin="10dip"
         android:textColor="@color/item_title"        
         android:layout_alignParentLeft="true"
         android:gravity="center" />
@@ -45,9 +45,9 @@
         android:layout_margin="10dip"
         android:layout_below="@+id/new_title"
         android:gravity="center"
-        android:textColor="@color/item_title"        
+        android:textColor="@color/item_title_disabled"        
         android:layout_alignParentLeft="true"
-        android:textSize="12sp" />
+        android:textSize="10sp" />
 
     <ImageView
         android:id="@+id/new_img"
@@ -63,7 +63,7 @@
         android:id="@+id/wb_details"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="15dip"
+        android:layout_margin="10dip"
         android:layout_below="@+id/new_img"
         android:visibility="visible"
         android:textSize="16sp"

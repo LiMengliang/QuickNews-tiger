@@ -30,14 +30,17 @@ public class HtmlTextView extends JellyBeanSpanFixTextView {
 
     public HtmlTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        setLineSpacing(0f, 1.5f);
     }
 
     public HtmlTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        setLineSpacing(0f, 1.5f);
     }
 
     public HtmlTextView(Context context) {
         super(context);
+        setLineSpacing(0f, 1.5f);
     }
 
     /**

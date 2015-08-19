@@ -39,6 +39,7 @@ import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @EActivity(R.layout.main)
 public class MainActivity extends BaseActivity {
@@ -224,11 +225,12 @@ public class MainActivity extends BaseActivity {
      * 初始化Fragment
      */
     private void initFragment() {
+    	List<ChannelItem> userChannels = ChannelManage.getManage(App.getApp().getSQLHelper()).getUserChannel();
         fragments.clear();
-        int count = userChannelLists.size();
+        int count = userChannels.size();
         for (int i = 0; i < count; i++) {
             // Bundle data = new Bundle();
-            String nameString = userChannelLists.get(i).getName();
+            String nameString = userChannels.get(i).getName();
             // data.putString("text", nameString);
             // data.putInt("id", userChannelList.get(i).getId());
             // initFragment(nameString);

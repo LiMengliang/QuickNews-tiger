@@ -33,17 +33,17 @@ public class WelcomeActivity extends BaseActivity {
     public void initView() {
         String result = getCacheStr("welcome");
         cache = getCacheStr("MoreActivity");
-        if (StringUtils.isEmpty(cache)) {
-            if (!StringUtils.isEmpty(result)) {
-                // mDiscrollView.setVisibility(View.GONE);
-            	mFramelayout.setVisibility(View.GONE);
-                MainActivity_.intent(this).start();
-                defaultFinishNotActivityHelper();
-            }
-        } else {
-            // mDiscrollView.setVisibility(View.VISIBLE);
-        	mFramelayout.setVisibility(View.VISIBLE);
-        }
+//        if (StringUtils.isEmpty(cache)) {
+//            if (!StringUtils.isEmpty(result)) {
+//                // mDiscrollView.setVisibility(View.GONE);
+//            	mFramelayout.setVisibility(View.GONE);
+//                MainActivity_.intent(this).start();
+//                defaultFinishNotActivityHelper();
+//            }
+//        } else {
+//            // mDiscrollView.setVisibility(View.VISIBLE);
+//        	mFramelayout.setVisibility(View.VISIBLE);
+//        }
     }
 
     @Click(R.id.start)
