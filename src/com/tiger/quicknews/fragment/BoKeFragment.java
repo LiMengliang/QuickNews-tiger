@@ -100,7 +100,7 @@ public class BoKeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     }
 
     private void loadData(String url) {
-        if (getMyActivity().hasNetWork()) {
+        if (HttpUtil.isNetworkAvailable(getMyActivity())) {
             loadNewList(url);
         } else {
             mListView.onBottomComplete();

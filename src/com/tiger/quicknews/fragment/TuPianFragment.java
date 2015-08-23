@@ -122,7 +122,7 @@ public class TuPianFragment extends BaseFragment implements SwipeRefreshLayout.O
     }
 
     private void loadData(String url) {
-        if (getMyActivity().hasNetWork()) {
+        if (HttpUtil.isNetworkAvailable(getMyActivity())) {
             loadNewList(url);
         } else {
             mListView.onBottomComplete();

@@ -125,7 +125,7 @@ public class TuPianReDianFragment extends BaseFragment implements
     }
 
     private void loadData(String url) {
-        if (getMyActivity().hasNetWork()) {
+        if (HttpUtil.isNetworkAvailable(getMyActivity())) {
             loadNewList(url);
         } else {
             mListView.onBottomComplete();

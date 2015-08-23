@@ -62,21 +62,6 @@ public class BaseActivity extends SlidingActivity {
         return true;
     }
 
-    public String getUrl(String newId) {
-        return Url.NewDetail + newId + Url.endDetailUrl;
-    }
-
-    public String getMsgUrl(String index, String itemId) {
-        String urlString = Url.CommonUrl + itemId + "/" + index + "-40.html";
-        return urlString;
-    }
-
-    public String getWeatherUrl(String cityName) throws UnsupportedEncodingException {
-        // + Url.WeatherKey
-        String urlString = Url.WeatherHost + URLEncoder.encode(cityName, "utf-8");
-        return urlString;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -186,15 +171,6 @@ public class BaseActivity extends SlidingActivity {
             // startActivityForResult(intent, requestCode);
         }
         // actityAnim();
-    }
-
-    /**
-     * 判断是否有网络
-     * 
-     * @return
-     */
-    public boolean hasNetWork() {
-        return HttpUtil.isNetworkAvailable(this);
     }
 
     /**

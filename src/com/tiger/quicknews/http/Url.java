@@ -1,6 +1,9 @@
 
 package com.tiger.quicknews.http;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 public class Url {
     public static final String host = "http://c.m.163.com/";
     public static final String endUrl = "-20.html";
@@ -126,4 +129,36 @@ public class Url {
     public static final String MEITU_ID = "http://api.sina.cn/sinago/list.json?channel=hdpic_pretty&adid=4ad30dabe134695c3b7c3a65977d7e72&wm=b207&from=6042095012&chwm=12050_0001&oldchwm=12050_0001&imei=867064013906290&uid=802909da86d9f5fc&p=";
     // 故事列表
     public static final String GUSHI_ID = "http://api.sina.cn/sinago/list.json?channel=hdpic_story&adid=4ad30dabe134695c3b7c3a65977d7e72&wm=b207&from=6042095012&chwm=12050_0001&oldchwm=12050_0001&imei=867064013906290&uid=802909da86d9f5fc&p=";
+    
+    /**
+     * 创建相对应的URL
+     * @param newsId 新闻ID
+     * @return 相应的URL
+     */
+    public static String getUrl(String newsId)
+    {
+    	return Url.NewDetail + newsId + Url.endDetailUrl;
+    }
+    
+    /**
+     * 获取新闻地址
+     * @param index Index
+     * @param itemId Id
+     * @return
+     */
+    public static String getMsgUrl(String index, String itemId) {
+        String urlString = Url.CommonUrl + itemId + "/" + index + "-40.html";
+        return urlString;
+    }
+
+    /**
+     * 创建相对应的天气URL
+     * @param cityName 城市名称
+     * @return 相应的URL
+     */
+    public static String getWeatherUrl(String cityName) throws UnsupportedEncodingException {
+        // + Url.WeatherKey
+        String urlString = Url.WeatherHost + URLEncoder.encode(cityName, "utf-8");
+        return urlString;
+    }
 }

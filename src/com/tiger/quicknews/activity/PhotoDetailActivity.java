@@ -63,7 +63,7 @@ public class PhotoDetailActivity extends BaseActivity implements OnFlipListener,
     }
 
     private void loadData(String url) {
-        if (hasNetWork()) {
+        if (HttpUtil.isNetworkAvailable(this)) {
             loadPhotoList(url);
         } else {
             dismissProgressDialog();

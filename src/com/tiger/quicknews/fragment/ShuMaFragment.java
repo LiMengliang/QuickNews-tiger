@@ -100,7 +100,7 @@ public class ShuMaFragment extends BaseFragment implements SwipeRefreshLayout.On
     }
 
     private void loadData(String url) {
-        if (getMyActivity().hasNetWork()) {
+        if (HttpUtil.isNetworkAvailable(getMyActivity())) {
             loadNewList(url);
         } else {
             mListView.onBottomComplete();

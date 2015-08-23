@@ -101,7 +101,7 @@ public class BeiJingFragment extends BaseFragment implements SwipeRefreshLayout.
     }
 
     private void loadData(String url) {
-        if (getMyActivity().hasNetWork()) {
+        if (HttpUtil.isNetworkAvailable(getMyActivity())) {
             loadNewList(url);
         } else {
             mListView.onBottomComplete();

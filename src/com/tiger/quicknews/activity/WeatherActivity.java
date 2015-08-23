@@ -16,6 +16,7 @@ import com.tiger.quicknews.adapter.WeatherAdapter;
 import com.tiger.quicknews.bean.WeatherModle;
 import com.tiger.quicknews.http.HttpUtil;
 import com.tiger.quicknews.http.ResponseData;
+import com.tiger.quicknews.http.Url;
 import com.tiger.quicknews.http.VolleyUtils;
 import com.tiger.quicknews.http.json.WeatherListJson;
 import com.tiger.quicknews.initview.SlidingMenuView;
@@ -85,7 +86,7 @@ public class WeatherActivity extends BaseActivity implements ResponseData {
             mTitle.setText(titleName + "天气");
             mLocal.setVisibility(View.VISIBLE);
             setBack(titleName);
-            loadData(getWeatherUrl(titleName));
+            loadData(Url.getWeatherUrl(titleName));
 
             mWeatherDate.setText(TimeUtils.getCurrentTime());
         } catch (Exception e) {
@@ -123,7 +124,7 @@ public class WeatherActivity extends BaseActivity implements ResponseData {
     }
 
     private void loadData(String url) {
-        if (hasNetWork()) {
+        if (HttpUtil.isNetworkAvailable(this)) {
             loadNewDetailData(url);
         } else {
             showShortToast(getString(R.string.not_network));
@@ -185,7 +186,7 @@ public class WeatherActivity extends BaseActivity implements ResponseData {
                 mTitle.setText(titleName + "天气");
                 setBack(titleName);
                 try {
-                    loadData(getWeatherUrl(titleName));
+                    loadData(Url.getWeatherUrl(titleName));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

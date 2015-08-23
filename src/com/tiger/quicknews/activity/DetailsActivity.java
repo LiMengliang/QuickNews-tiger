@@ -22,6 +22,7 @@ import com.tiger.quicknews.R;
 import com.tiger.quicknews.bean.NewDetailModle;
 import com.tiger.quicknews.bean.NewModle;
 import com.tiger.quicknews.http.HttpUtil;
+import com.tiger.quicknews.http.Url;
 import com.tiger.quicknews.http.json.NewDetailJson;
 import com.tiger.quicknews.utils.Options;
 import com.tiger.quicknews.utils.StringUtils;
@@ -73,7 +74,7 @@ public class DetailsActivity extends BaseActivity implements ImageLoadingListene
         try {
             newModle = (NewModle) getIntent().getExtras().getSerializable("newModle");
             newID = newModle.getDocid();
-            newUrl = getUrl(newID);
+            newUrl = Url.getUrl(newID);
             imageLoader = ImageLoader.getInstance();
             options = Options.getListOptions();
         } catch (Exception e) {
@@ -103,7 +104,7 @@ public class DetailsActivity extends BaseActivity implements ImageLoadingListene
     }
 
     private void loadData(String url) {
-        if (hasNetWork()) {
+        if (HttpUtil.isNetworkAvailable(this)) {
             loadNewDetailData(url);
         } else {
             dismissProgressDialog();

@@ -64,7 +64,7 @@ public class PicuterDetailActivity extends BaseActivity implements OnFlipListene
     }
 
     private void loadData(String url) {
-        if (hasNetWork()) {
+        if (HttpUtil.isNetworkAvailable(this)) {
             loadPhotoList(url);
         } else {
             dismissProgressDialog();

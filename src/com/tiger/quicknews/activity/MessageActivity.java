@@ -58,7 +58,7 @@ public class MessageActivity extends BaseActivity implements SwipeRefreshLayout.
             swipeLayout.setOnRefreshListener(this);
             InitView.instance().initSwipeRefreshLayout(swipeLayout);
             InitView.instance().initListView(mListView, this);
-            loadData(getMsgUrl(0 + "", Url.MsgId));
+            loadData(Url.getMsgUrl(0 + "", Url.MsgId));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -70,13 +70,13 @@ public class MessageActivity extends BaseActivity implements SwipeRefreshLayout.
             @Override
             public void run() {
                 isRefresh = true;
-                loadData(getMsgUrl(0 + "", Url.MsgId));
+                loadData(Url.getMsgUrl(0 + "", Url.MsgId));
             }
         }, 2000);
     }
 
     private void loadData(String url) {
-        if (hasNetWork()) {
+        if (HttpUtil.isNetworkAvailable(this)) {
             loadNewList(url);
         } else {
             dismissProgressDialog();
@@ -120,7 +120,7 @@ public class MessageActivity extends BaseActivity implements SwipeRefreshLayout.
     @Override
     public void onClick(View v) {
         index = index + 40;
-        loadData(getMsgUrl(index + "", Url.MsgId));
+        loadData(Url.getMsgUrl(index + "", Url.MsgId));
     }
 
     @ItemClick(R.id.listview)
