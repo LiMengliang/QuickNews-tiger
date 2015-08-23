@@ -218,7 +218,7 @@ public class JunShiFragment extends BaseFragment implements SwipeRefreshLayout.O
         List<NewModle> list = NewListJson.instance(getActivity()).readJsonNewModles(result,
                 Url.JunShiId);
         for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i).getImgsrc());
+            // System.out.println(list.get(i).getImgsrc());
         }
         if (index == 0 && list.size() >= 4) {
             initSliderLayout(list);

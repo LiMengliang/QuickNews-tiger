@@ -30,28 +30,31 @@ public class ChannelDao implements ChannelDaoInface {
             database.beginTransaction();
             ContentValues values = new ContentValues();
 
-            java.lang.Class<? extends ChannelItem> clazz = item.getClass();
+//            java.lang.Class<? extends ChannelItem> clazz = item.getClass();
+//
+//            String tableNmae = clazz.getSimpleName();
+//
+//            Method[] methods = clazz.getMethods();
+//
+//            for (Method method : methods) {
+//                String mName = method.getName();
+//                if (mName.startsWith("get") && !mName.startsWith("getClass")) {
+//                    String fieldName = mName.substring(3, mName.length()).toLowerCase();
+//                    Object value = method.invoke(item, null);
+//                    if (value instanceof String) {
+//                        values.put(fieldName, (String) value);
+//                    }
+//                }
+//            }
 
-            String tableNmae = clazz.getSimpleName();
-
-            Method[] methods = clazz.getMethods();
-
-            for (Method method : methods) {
-                String mName = method.getName();
-                if (mName.startsWith("get") && !mName.startsWith("getClass")) {
-                    String fieldName = mName.substring(3, mName.length()).toLowerCase();
-                    Object value = method.invoke(item, null);
-                    if (value instanceof String) {
-                        values.put(fieldName, (String) value);
-                    }
-                }
-            }
-
-            // values.put("name", item.getName());
-            // values.put("id", item.getId());
-            // values.put("orderId", item.getOrderId());
-            // values.put("selected", item.getSelected());
-            id = database.insert(tableNmae, null, values);
+             values.put("name", item.getName());
+             values.put("id", item.getId());
+             values.put("orderId", item.getOrderId());
+             values.put("selected", item.getSelected());
+            // id = database.insert("ChannelItem", null, values);
+             String insertSQL = "insert into ChannelItem (id, name, orderId, selected) values (" +
+            item.getId() + ", \"" + item.getName() + "\" , " + item.getOrderId() + " , " + item.getSelected() + ")";
+             database.execSQL(insertSQL);
             flag = (id != -1 ? true : false);
             database.setTransactionSuccessful();
         } catch (Exception e) {
@@ -125,7 +128,7 @@ public class ChannelDao implements ChannelDaoInface {
             // count = database.update(SQLHelper.TABLE_CHANNEL, values,
             // whereClause, whereArgs);
             database.execSQL("update " + SQLHelper.TABLE_CHANNEL + " set selected = "
-                    + values.getAsString("selected") + " where id = " + values.getAsString("id"));
+                    + values.getAsString("selected") + " where name = \"" + values.getAsString("name") +"\"");
             flag = (count > 0 ? true : false);
         } catch (Exception e) {
             e.printStackTrace();

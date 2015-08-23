@@ -4,12 +4,13 @@ package com.tiger.quicknews.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-public class NewsFragmentPagerAdapter extends FragmentPagerAdapter {
+public class NewsFragmentPagerAdapter extends FragmentStatePagerAdapter {
     private ArrayList<Fragment> fragments = new ArrayList<Fragment>();;
     private final FragmentManager fm;
 
@@ -73,7 +74,8 @@ public class NewsFragmentPagerAdapter extends FragmentPagerAdapter {
         if (fragments.size() <= position) {
             position = position % fragments.size();
         }
-        Object obj = super.instantiateItem(container, position);
+        
+        Fragment obj = (Fragment)super.instantiateItem(container, position);
         return obj;
     }
 

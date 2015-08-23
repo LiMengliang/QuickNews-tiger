@@ -1,6 +1,8 @@
 
 package com.tiger.quicknews.db;
 
+import com.tiger.quicknews.bean.ChannelManage;
+
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -35,7 +37,7 @@ public class SQLHelper extends SQLiteOpenHelper {
                 NAME + " TEXT , " +
                 ORDERID + " INTEGER , " +
                 SELECTED + " TEXT)";
-        db.execSQL(sql);
+        db.execSQL(sql); 
     }
 
     @Override
