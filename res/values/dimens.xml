@@ -114,7 +114,7 @@
     <dimen name="top_category_scroll_text_padding">5.0dip</dimen>
     <dimen name="top_category_scroll_item_margin">8.0dip</dimen>
     <dimen name="article_list_item_bottom_padding">50.0dip</dimen>
-    <dimen name="list_item_horizontal_padding">15.0dip</dimen>
+    <dimen name="list_item_horizontal_padding">10.0dip</dimen>
     <dimen name="list_user_vertical_padding">10.0dip</dimen>
     <dimen name="feed_user_avatar_size">48.0dip</dimen>
     <dimen name="feed_user_avatar_corner">2.0dip</dimen>

@@ -33,10 +33,17 @@ public class LeftView extends LinearLayout {
         context.openActivity(VideoActivity_.class);
         isShow();
     }
+    
+    @Click(R.id.audio)
+    public void enterAudio(View view)
+    {
+    	context.openActivity(AudioActivity_.class);
+    	isShow();
+    }
 
     @Click(R.id.ties)
     public void enterMessage(View view) {
-        context.openActivity(MessageActivity_.class);
+        context.openActivity(MainActivity_.class);
         isShow();
     }
 

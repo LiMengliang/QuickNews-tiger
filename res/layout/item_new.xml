@@ -29,8 +29,8 @@
                     android:id="@+id/title_layout"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="3.0dip"
-                    android:paddingRight="7.0dip" >
+                    android:paddingTop="8.0dip"
+                    android:paddingRight="8.0dip" >
 
                     <ImageView
                         android:id="@+id/left_image"

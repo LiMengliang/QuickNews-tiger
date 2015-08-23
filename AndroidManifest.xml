@@ -53,6 +53,7 @@
         <activity android:name=".activity.PhotoDetailActivity_" />
         <activity android:name=".activity.TuPianActivity_" />
         <activity android:name=".activity.VideoActivity_" />
+        <activity android:name=".activity.AudioActivity_" />
         <activity
             android:name=".activity.VideoPlayActivity_"
             android:launchMode="singleTask"

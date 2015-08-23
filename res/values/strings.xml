@@ -49,6 +49,7 @@
    <!-- 左边页面 -->
    <string name="pics">图片</string>
    <string name="video">视频</string>
+   <string name="audio">音频</string>
    <string name="ties">消息</string>
    <string name="tianqi">天气</string>
    <string name="more">更多</string>

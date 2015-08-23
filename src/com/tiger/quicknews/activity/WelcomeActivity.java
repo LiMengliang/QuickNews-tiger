@@ -20,30 +20,15 @@ import org.androidannotations.annotations.ViewById;
 @EActivity(R.layout.activity_simplewelcome)
 public class WelcomeActivity extends BaseActivity {
     @ViewById(R.id.layout)
-    protected DiscrollView mDiscrollView;
-    
+    protected DiscrollView mDiscrollView;    
     @ViewById(R.id.welcome)
     protected FrameLayout mFramelayout;
-
-    @ViewById(R.id.lastView3)
-    protected Button mButton;
     private String cache;
 
     @AfterViews
     public void initView() {
         String result = getCacheStr("welcome");
         cache = getCacheStr("MoreActivity");
-//        if (StringUtils.isEmpty(cache)) {
-//            if (!StringUtils.isEmpty(result)) {
-//                // mDiscrollView.setVisibility(View.GONE);
-//            	mFramelayout.setVisibility(View.GONE);
-//                MainActivity_.intent(this).start();
-//                defaultFinishNotActivityHelper();
-//            }
-//        } else {
-//            // mDiscrollView.setVisibility(View.VISIBLE);
-//        	mFramelayout.setVisibility(View.VISIBLE);
-//        }
     }
 
     @Click(R.id.start)
