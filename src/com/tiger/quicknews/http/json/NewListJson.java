@@ -70,7 +70,7 @@ public class NewListJson extends JsonPacket {
                 newModles.add(newModle);
             }
         } catch (Exception e) {
-
+        	System.out.println(e);
         } finally {
             System.gc();
         }

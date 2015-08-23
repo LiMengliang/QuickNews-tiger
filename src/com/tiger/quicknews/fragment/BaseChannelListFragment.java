@@ -90,14 +90,14 @@ public class BaseChannelListFragment extends BaseFragment implements SwipeRefres
         AnimationAdapter animationAdapter = new CardsAnimationAdapter(newAdapter);
         animationAdapter.setAbsListView(mListView);
         mListView.setAdapter(animationAdapter);
-        loadData(getCommonUrl(index + "", channelId));
+        loadData(getNewsListUrl(index + "", channelId));
 
         mListView.setOnBottomListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 currentPagte++;
                 index = index + 20;
-                loadData(getCommonUrl(index + "", channelId));
+                loadData(getNewsListUrl(index + "", channelId));
             }
         });
     }
@@ -161,7 +161,7 @@ public class BaseChannelListFragment extends BaseFragment implements SwipeRefres
             public void run() {
                 currentPagte = 1;
                 isRefresh = true;
-                loadData(getCommonUrl(0 + "", channelId));
+                loadData(getNewsListUrl(0 + "", channelId));
                 url_maps.clear();
                 mDemoSlider.removeAllSliders();
             }
@@ -235,5 +235,11 @@ public class BaseChannelListFragment extends BaseFragment implements SwipeRefres
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd("MainScreen");
+    }
+    
+    protected String getNewsListUrl(String index, String itemId)
+    {
+    	String urlString = Url.CommonUrl + itemId + "/" + index + Url.endUrl;
+        return urlString;
     }
 }
