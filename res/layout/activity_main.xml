@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
        	android:divider="@color/list_divider"
-        android:dividerHeight="0.1dp"
+        android:dividerHeight="1dip"
         android:footerDividersEnabled="false"
         android:scrollbarSize="@dimen/listview_scrollbar_width"
         android:scrollbarThumbVertical="@drawable/scrollbar" 

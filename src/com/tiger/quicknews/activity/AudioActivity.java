@@ -1,26 +1,175 @@
 
 package com.tiger.quicknews.activity;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.widget.RadioButton;
+import java.util.ArrayList;
+import java.util.List;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.nhaarman.listviewanimations.swinginadapters.AnimationAdapter;
 import com.tiger.quicknews.R;
-import com.tiger.quicknews.adapter.MyOnClickListener;
-import com.tiger.quicknews.adapter.NewsFragmentPagerAdapter;
-import com.tiger.quicknews.fragment.*;
+import com.tiger.quicknews.adapter.AudioAdapter;
+import com.tiger.quicknews.adapter.CardsAnimationAdapter;
+import com.tiger.quicknews.bean.NewModle;
+import com.tiger.quicknews.http.HttpUtil;
+import com.tiger.quicknews.http.Url;
+import com.tiger.quicknews.http.json.NewListJson;
+import com.tiger.quicknews.initview.InitView;
+import com.tiger.quicknews.utils.ACache;
+import com.tiger.quicknews.utils.StringUtils;
+import com.tiger.quicknews.wedget.swiptlistview.SwipeListView;
 import com.umeng.analytics.MobclickAgent;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ItemClick;
+import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
-import java.util.ArrayList;
-
 @EActivity(R.layout.activity_audio)
-public class AudioActivity extends BaseActivity {    
+public class AudioActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
+	@ViewById(R.id.title)
+	protected TextView mTitle;
+	@ViewById(R.id.swipe_container)
+	protected  SwipeRefreshLayout swipeLayout;
+	@ViewById(R.id.listview)
+	protected SwipeListView mListView;
+	@ViewById(R.id.progressBar)
+	protected ProgressBar mProgressBar;	
+		
+	private AudioAdapter audioAdapter = new AudioAdapter(this);
+	private List<NewModle> listsModles;	
+	private int currentPage = 1;
+	private int index = 0;
+	private boolean isRefresh;
+	private String cacheName = "audio";
+	
+	@AfterInject
+	protected void init() {
+		listsModles = new ArrayList<NewModle>();
+	}
+	
+	private void loadData(String url) {
+        if (HttpUtil.isNetworkAvailable(this)) {
+            loadNewList(url);
+        } else {
+            mListView.onBottomComplete();
+            mProgressBar.setVisibility(View.GONE);
+            // this.showShortToast(getString(R.string.not_network));
+            String result = ACache.get(this).getAsString(cacheName + currentPage);
+            if (!StringUtils.isEmpty(result)) {
+                getResult(result);
+            }
+        }
+    }
+	
+	@Background
+    void loadNewList(String url) {
+        String result;
+        try {
+            result = HttpUtil.getByHttpClient(this, url);
+            getResult(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+	
+	 @UiThread
+	    public void getResult(String result) {
+		 // TODO:
+	        // setCacheStr(cacheName + currentPage, result);
+		 	if (!StringUtils.isEmpty(result)) {
+	            ACache.get(this).put(cacheName + currentPage, result);
+	        }
+	        if (isRefresh) {
+	            isRefresh = false;
+	            audioAdapter.clear();
+	            listsModles.clear();
+	        }
+	        mProgressBar.setVisibility(View.GONE);
+	        swipeLayout.setRefreshing(false);
 
+	        List<NewModle> list = NewListJson.instance(this).readJsonNewModles(result, Url.DianTaiId);
+//	        if (index == 0 && list.size() >= 4) {
+//	            initSliderLayout(list);
+//	        } else 
+//	        {
+	            audioAdapter.appendList(list);
+//	        }
+	        listsModles.addAll(list);
+	        mListView.onBottomComplete();
+	    }
+	
+	@AfterViews
+	public void initView() {
+		try{
+			mTitle.setText("音频新闻");
+			swipeLayout.setOnRefreshListener(this);
+			InitView.instance().initSwipeRefreshLayout(swipeLayout);
+			InitView.instance().initListView(mListView, this);
+			AnimationAdapter animationAdapter = new CardsAnimationAdapter(audioAdapter);
+			animationAdapter.setAbsListView(mListView);
+			mListView.setAdapter(animationAdapter);
+			// Load data
+			loadData(getNewsListUrl(index + "", Url.DianTaiId));
+			mListView.setOnBottomListener(new OnClickListener() {
+	            @Override
+	            public void onClick(View v) {
+	            	currentPage++;
+	                index = index + 10;
+	                // Load Data
+	                loadData(getNewsListUrl(index + "", Url.DianTaiId));
+	            }
+	        });
+			
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	@ItemClick(R.id.listview)
+	protected void onItemClick(int position)
+	{
+		NewModle audioModel = listsModles.get(position - 1);
+		// Play audio
+	}
+
+	@Override
+	public void onRefresh() {
+		new Handler().postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				currentPage = 1;
+				isRefresh = true;
+				// Load data
+				loadData(getNewsListUrl(index + "", Url.DianTaiId));
+			}
+		}, 2000);
+		
+	}
+	
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("MainScreen"); // 统计页面
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("MainScreen");
+    }
+    
+    protected String getNewsListUrl(String index, String itemId)
+    {
+    	String urlString = Url.CommonUrl + itemId + "/" + index + Url.endUrl;
+        return urlString;
+    }
 }
