@@ -12,7 +12,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tiger.quicknews.App;
 import com.tiger.quicknews.R;
-import com.tiger.quicknews.bean.NewModle;
+import com.tiger.quicknews.bean.NewsModel;
 import com.tiger.quicknews.utils.Options;
 
 import org.androidannotations.annotations.EViewGroup;
@@ -21,7 +21,7 @@ import org.androidannotations.annotations.ViewById;
 import java.util.List;
 
 @EViewGroup(R.layout.item_new)
-public class NewItemView extends LinearLayout {
+public class NewsDigestView extends LinearLayout {
 
     @ViewById(R.id.left_image)
     protected ImageView leftImage;
@@ -57,7 +57,7 @@ public class NewItemView extends LinearLayout {
 
     protected DisplayImageOptions options;
 
-    public NewItemView(Context context) {
+    public NewsDigestView(Context context) {
         super(context);
         options = Options.getListOptions();
     }
@@ -80,7 +80,7 @@ public class NewItemView extends LinearLayout {
         }
     }
 
-    public void setImages(NewModle newModle) {
+    public void setImages(NewsModel newModle) {
         imageLayout.setVisibility(View.VISIBLE);
         articleLayout.setVisibility(View.GONE);
         itemAbstract.setText(newModle.getTitle());

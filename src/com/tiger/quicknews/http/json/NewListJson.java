@@ -4,7 +4,7 @@ package com.tiger.quicknews.http.json;
 import android.content.Context;
 
 import com.tiger.quicknews.bean.ImagesModle;
-import com.tiger.quicknews.bean.NewModle;
+import com.tiger.quicknews.bean.NewsModel;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -16,7 +16,7 @@ public class NewListJson extends JsonPacket {
 
     public static NewListJson newListJson;
 
-    public List<NewModle> newModles;
+    public List<NewsModel> newModles;
 
     public NewListJson(Context context) {
         super(context);
@@ -29,13 +29,13 @@ public class NewListJson extends JsonPacket {
         return newListJson;
     }
 
-    public List<NewModle> readJsonNewModles(String res, String value) {
-        newModles = new ArrayList<NewModle>();
+    public List<NewsModel> readJsonNewModles(String res, String value) {
+        newModles = new ArrayList<NewsModel>();
         try {
             if (res == null || res.equals("")) {
                 return null;
             }
-            NewModle newModle = null;
+            NewsModel newModle = null;
             JSONObject jsonObject = new JSONObject(res);
             JSONArray jsonArray = jsonObject.getJSONArray(value);
             // if (isFirst) {
@@ -47,7 +47,7 @@ public class NewListJson extends JsonPacket {
             // }
 
             for (int i = 1; i < jsonArray.length(); i++) {
-                newModle = new NewModle();
+                newModle = new NewsModel();
                 JSONObject js = jsonArray.getJSONObject(i);
 //                if (js.has("skipType") && js.getString("skipType").equals("special")) {
 //                    continue;
@@ -101,8 +101,8 @@ public class NewListJson extends JsonPacket {
      * @return
      * @throws Exception
      */
-    public NewModle readNewModle(JSONObject jsonObject) throws Exception {
-        NewModle newModle = null;
+    public NewsModel readNewModle(JSONObject jsonObject) throws Exception {
+        NewsModel newModle = null;
 
         String docid = "";
         String title = "";
@@ -120,7 +120,7 @@ public class NewListJson extends JsonPacket {
         ptime = getString("ptime", jsonObject);
         tag = getString("TAG", jsonObject);
 
-        newModle = new NewModle();
+        newModle = new NewsModel();
 
         newModle.setDigest(digest);
         newModle.setDocid(docid);

@@ -3,7 +3,7 @@ package com.tiger.quicknews.http.json;
 
 import android.content.Context;
 
-import com.tiger.quicknews.bean.NewDetailModle;
+import com.tiger.quicknews.bean.NewsDetailModel;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -15,7 +15,7 @@ public class NewDetailJson extends JsonPacket {
 
     public static NewDetailJson newDetailJson;
 
-    public NewDetailModle newDetailModle;
+    public NewsDetailModel newDetailModle;
 
     public NewDetailJson(Context context) {
         super(context);
@@ -27,8 +27,17 @@ public class NewDetailJson extends JsonPacket {
         }
         return newDetailJson;
     }
+    
+    public static NewDetailJson instance()
+    {
+    	if(newDetailJson == null)
+    	{
+    		newDetailJson = new NewDetailJson(null);
+    	}
+    	return newDetailJson;
+    }
 
-    public NewDetailModle readJsonNewModles(String res, String newId) {
+    public NewsDetailModel readJsonNewsDetailModel(String res, String newId) {
         try {
             if (res == null || res.equals("")) {
                 return null;
@@ -67,8 +76,8 @@ public class NewDetailJson extends JsonPacket {
      * @return
      * @throws Exception
      */
-    public NewDetailModle readNewModle(JSONObject jsonObject) throws Exception {
-        NewDetailModle newDetailModle = null;
+    public NewsDetailModel readNewModle(JSONObject jsonObject) throws Exception {
+        NewsDetailModel newDetailModle = null;
 
         String docid = "";
         String title = "";
@@ -94,7 +103,7 @@ public class NewDetailJson extends JsonPacket {
 
         List<String> imgList = readImgList(jsonArray);
 
-        newDetailModle = new NewDetailModle();
+        newDetailModle = new NewsDetailModel();
 
         newDetailModle.setDocid(docid);
         newDetailModle.setImgList(imgList);

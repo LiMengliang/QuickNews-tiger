@@ -3,7 +3,7 @@ package com.tiger.quicknews.bean;
 
 import java.util.List;
 
-public class NewDetailModle extends BaseModle {
+public class NewsDetailModel extends BaseModle {
     /**
      * 
      */
@@ -37,7 +37,7 @@ public class NewDetailModle extends BaseModle {
      */
     private String url_mp4;
     /**
-     * ͼƬ�б�
+     * ͼƬ�б�
      */
     private List<String> imgList;
 

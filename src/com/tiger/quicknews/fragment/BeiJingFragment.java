@@ -14,8 +14,8 @@ import com.nhaarman.listviewanimations.swinginadapters.AnimationAdapter;
 import com.tiger.quicknews.R;
 import com.tiger.quicknews.activity.*;
 import com.tiger.quicknews.adapter.CardsAnimationAdapter;
-import com.tiger.quicknews.adapter.NewAdapter;
-import com.tiger.quicknews.bean.NewModle;
+import com.tiger.quicknews.adapter.NewsDigestAdapter;
+import com.tiger.quicknews.bean.NewsModel;
 import com.tiger.quicknews.http.HttpUtil;
 import com.tiger.quicknews.http.Url;
 import com.tiger.quicknews.http.json.NewListJson;
@@ -54,11 +54,11 @@ public class BeiJingFragment extends BaseFragment implements SwipeRefreshLayout.
     protected ProgressBar mProgressBar;
     protected HashMap<String, String> url_maps;
 
-    protected HashMap<String, NewModle> newHashMap;
+    protected HashMap<String, NewsModel> newHashMap;
 
     @Bean
-    protected NewAdapter newAdapter;
-    protected List<NewModle> listsModles;
+    protected NewsDigestAdapter newAdapter;
+    protected List<NewsModel> listsModles;
     private int index = 0;
     private boolean isRefresh = false;
 
@@ -69,10 +69,10 @@ public class BeiJingFragment extends BaseFragment implements SwipeRefreshLayout.
 
     @AfterInject
     protected void init() {
-        listsModles = new ArrayList<NewModle>();
+        listsModles = new ArrayList<NewsModel>();
         url_maps = new HashMap<String, String>();
 
-        newHashMap = new HashMap<String, NewModle>();
+        newHashMap = new HashMap<String, NewsModel>();
     }
 
     @AfterViews
@@ -114,7 +114,7 @@ public class BeiJingFragment extends BaseFragment implements SwipeRefreshLayout.
         }
     }
 
-    private void initSliderLayout(List<NewModle> newModles) {
+    private void initSliderLayout(List<NewsModel> newModles) {
 
         if (!isNullString(newModles.get(0).getImgsrc()))
             newHashMap.put(newModles.get(0).getImgsrc(), newModles.get(0));
@@ -163,11 +163,11 @@ public class BeiJingFragment extends BaseFragment implements SwipeRefreshLayout.
 
     @ItemClick(R.id.listview)
     protected void onItemClick(int position) {
-        NewModle newModle = listsModles.get(position - 1);
+        NewsModel newModle = listsModles.get(position - 1);
         enterDetailActivity(newModle);
     }
 
-    public void enterDetailActivity(NewModle newModle) {
+    public void enterDetailActivity(NewsModel newModle) {
         Bundle bundle = new Bundle();
         bundle.putSerializable("newModle", newModle);
         Class<?> class1;
@@ -202,7 +202,7 @@ public class BeiJingFragment extends BaseFragment implements SwipeRefreshLayout.
         mProgressBar.setVisibility(View.GONE);
         swipeLayout.setRefreshing(false);
 
-        List<NewModle> list = NewListJson.instance(getActivity()).readJsonNewModles(result,
+        List<NewsModel> list = NewListJson.instance(getActivity()).readJsonNewModles(result,
                 "北京");
         newAdapter.currentItem("北京");
         if (index == 0 && list.size() >= 4) {
@@ -216,7 +216,7 @@ public class BeiJingFragment extends BaseFragment implements SwipeRefreshLayout.
 
     @Override
     public void onSliderClick(BaseSliderView slider) {
-        NewModle newModle = newHashMap.get(slider.getUrl());
+        NewsModel newModle = newHashMap.get(slider.getUrl());
         enterDetailActivity(newModle);
     }
 

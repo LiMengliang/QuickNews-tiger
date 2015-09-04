@@ -5,8 +5,8 @@ import android.widget.TextView;
 
 import com.tiger.quicknews.R;
 import com.tiger.quicknews.adapter.ImageAdapter;
-import com.tiger.quicknews.bean.NewDetailModle;
-import com.tiger.quicknews.bean.NewModle;
+import com.tiger.quicknews.bean.NewsDetailModel;
+import com.tiger.quicknews.bean.NewsModel;
 import com.tiger.quicknews.wedget.flipview.FlipView;
 import com.tiger.quicknews.wedget.flipview.FlipView.OnFlipListener;
 import com.tiger.quicknews.wedget.flipview.FlipView.OnOverFlipListener;
@@ -28,23 +28,23 @@ public class ImageDetailActivity extends BaseActivity implements OnFlipListener,
     protected FlipView mFlipView;
     @ViewById(R.id.new_title)
     protected TextView newTitle;
-    private NewModle newModle;
+    private NewsModel newModle;
     @Bean
     protected ImageAdapter imageAdapter;
     private List<String> imgList;
-    private NewDetailModle newDetailModle;
+    private NewsDetailModel newDetailModle;
     private String titleString;
 
     @AfterInject
     public void init() {
         try {
             if (getIntent().getExtras().getSerializable("newDetailModle") != null) {
-                newDetailModle = (NewDetailModle) getIntent().getExtras().getSerializable(
+                newDetailModle = (NewsDetailModel) getIntent().getExtras().getSerializable(
                         "newDetailModle");
                 imgList = newDetailModle.getImgList();
                 titleString = newDetailModle.getTitle();
             } else {
-                newModle = (NewModle) getIntent().getExtras().getSerializable("newModle");
+                newModle = (NewsModel) getIntent().getExtras().getSerializable("newModle");
                 imgList = newModle.getImagesModle().getImgList();
                 titleString = newModle.getTitle();
             }

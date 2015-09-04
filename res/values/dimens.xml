@@ -89,6 +89,8 @@
     <dimen name="item_image_max_width">180.0dip</dimen>
     <dimen name="right_image_width">96.0dip</dimen>
     <dimen name="right_image_height">70.0dip</dimen>
+    <dimen name="left_image_play_width">48.0dip</dimen>
+    <dimen name="left_image_play_height">48.0dip</dimen>
     <dimen name="item_ad_total_padding">45.0dip</dimen>
     <dimen name="essay_image_item_total_padding">32.0dip</dimen>
     <dimen name="splash_avatar_size">68.0dip</dimen>

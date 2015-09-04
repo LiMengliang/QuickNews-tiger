@@ -3,7 +3,7 @@ package com.tiger.quicknews.bean;
 
 import java.util.List;
 
-public class NewModle extends BaseModle {
+public class NewsModel extends BaseModle {
     /**
      * 
      */
@@ -13,23 +13,23 @@ public class NewModle extends BaseModle {
      */
     private String docid;
     /**
-     * ±êÌâ
+     * ï¿½ï¿½ï¿½ï¿½
      */
     private String title;
     /**
-     * Ð¡ÄÚÈÝ
+     * Ð¡ï¿½ï¿½ï¿½ï¿½
      */
     private String digest;
     /**
-     * Í¼Æ¬µØÖ·
+     * Í¼Æ¬ï¿½ï¿½Ö·
      */
     private String imgsrc;
     /**
-     * À´Ô´
+     * ï¿½ï¿½Ô´
      */
     private String source;
     /**
-     * Ê±¼ä
+     * Ê±ï¿½ï¿½
      */
     private String ptime;
     /**
@@ -37,7 +37,7 @@ public class NewModle extends BaseModle {
      */
     private String tag;
     /**
-     * ÁÐ±í
+     * ï¿½Ð±ï¿½
      */
     private ImagesModle imagesModle;
 
@@ -58,7 +58,7 @@ public class NewModle extends BaseModle {
     }
 
     /**
-     * Í·²¿ÁÐ±í
+     * Í·ï¿½ï¿½ï¿½Ð±ï¿½
      */
     private List<ImagesModle> imgHeadLists;
 

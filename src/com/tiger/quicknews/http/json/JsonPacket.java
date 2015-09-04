@@ -34,6 +34,11 @@ public abstract class JsonPacket {
     protected Context getContext() {
         return mContext;
     }
+    
+    public JsonPacket()
+    {
+    	mContext = null;
+    }
 
     /**
      * @param key

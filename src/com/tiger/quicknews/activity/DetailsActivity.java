@@ -19,8 +19,8 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener;
 import com.tiger.quicknews.R;
-import com.tiger.quicknews.bean.NewDetailModle;
-import com.tiger.quicknews.bean.NewModle;
+import com.tiger.quicknews.bean.NewsDetailModel;
+import com.tiger.quicknews.bean.NewsModel;
 import com.tiger.quicknews.http.HttpUtil;
 import com.tiger.quicknews.http.Url;
 import com.tiger.quicknews.http.json.NewDetailJson;
@@ -60,19 +60,19 @@ public class DetailsActivity extends BaseActivity implements ImageLoadingListene
     @ViewById(R.id.play)
     protected ImageView mPlay;
     private String newUrl;
-    private NewModle newModle;
+    private NewsModel newModle;
     private String newID;
     protected ImageLoader imageLoader;
     private String imgCountString;
 
     protected DisplayImageOptions options;
 
-    private NewDetailModle newDetailModle;
+    private NewsDetailModel newDetailModle;
 
     @AfterInject
     public void init() {
         try {
-            newModle = (NewModle) getIntent().getExtras().getSerializable("newModle");
+            newModle = (NewsModel) getIntent().getExtras().getSerializable("newModle");
             newID = newModle.getDocid();
             newUrl = Url.getUrl(newID);
             imageLoader = ImageLoader.getInstance();
@@ -129,7 +129,7 @@ public class DetailsActivity extends BaseActivity implements ImageLoadingListene
 
     @UiThread
     public void getResult(String result) {
-        newDetailModle = NewDetailJson.instance(this).readJsonNewModles(result,
+        newDetailModle = NewDetailJson.instance(this).readJsonNewsDetailModel(result,
                 newID);
         if (newDetailModle == null)
             return;

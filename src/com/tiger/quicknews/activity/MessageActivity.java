@@ -10,8 +10,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.tiger.quicknews.R;
-import com.tiger.quicknews.adapter.NewAdapter;
-import com.tiger.quicknews.bean.NewModle;
+import com.tiger.quicknews.adapter.NewsDigestAdapter;
+import com.tiger.quicknews.bean.NewsModel;
 import com.tiger.quicknews.http.HttpUtil;
 import com.tiger.quicknews.http.Url;
 import com.tiger.quicknews.http.json.NewListJson;
@@ -46,14 +46,14 @@ public class MessageActivity extends BaseActivity implements SwipeRefreshLayout.
     // 是否刷新操作
     private boolean isRefresh = false;
     @Bean
-    protected NewAdapter newAdapter;
-    protected List<NewModle> listsModles;
+    protected NewsDigestAdapter newAdapter;
+    protected List<NewsModel> listsModles;
     private int index;
 
     @AfterViews
     public void initView() {
         try {
-            listsModles = new ArrayList<NewModle>();
+            listsModles = new ArrayList<NewsModel>();
             mTitle.setText("消息列表");
             swipeLayout.setOnRefreshListener(this);
             InitView.instance().initSwipeRefreshLayout(swipeLayout);
@@ -110,7 +110,7 @@ public class MessageActivity extends BaseActivity implements SwipeRefreshLayout.
         mProgressBar.setVisibility(View.GONE);
         swipeLayout.setRefreshing(false);
 
-        List<NewModle> list = NewListJson.instance(this).readJsonNewModles(result,
+        List<NewsModel> list = NewListJson.instance(this).readJsonNewModles(result,
                 Url.MsgId);
         newAdapter.appendList(list);
         listsModles.addAll(list);
@@ -125,11 +125,11 @@ public class MessageActivity extends BaseActivity implements SwipeRefreshLayout.
 
     @ItemClick(R.id.listview)
     protected void onItemClick(int position) {
-        NewModle newModle = listsModles.get(position);
+        NewsModel newModle = listsModles.get(position);
         enterDetailActivity(newModle);
     }
 
-    public void enterDetailActivity(NewModle newModle) {
+    public void enterDetailActivity(NewsModel newModle) {
         Bundle bundle = new Bundle();
         bundle.putSerializable("newModle", newModle);
         Class<?> class1;

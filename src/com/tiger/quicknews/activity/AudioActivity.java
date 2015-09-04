@@ -2,7 +2,9 @@
 package com.tiger.quicknews.activity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
@@ -14,7 +16,7 @@ import com.nhaarman.listviewanimations.swinginadapters.AnimationAdapter;
 import com.tiger.quicknews.R;
 import com.tiger.quicknews.adapter.AudioAdapter;
 import com.tiger.quicknews.adapter.CardsAnimationAdapter;
-import com.tiger.quicknews.bean.NewModle;
+import com.tiger.quicknews.bean.NewsModel;
 import com.tiger.quicknews.http.HttpUtil;
 import com.tiger.quicknews.http.Url;
 import com.tiger.quicknews.http.json.NewListJson;
@@ -22,6 +24,8 @@ import com.tiger.quicknews.initview.InitView;
 import com.tiger.quicknews.utils.ACache;
 import com.tiger.quicknews.utils.StringUtils;
 import com.tiger.quicknews.wedget.swiptlistview.SwipeListView;
+import com.tiger.quicknews.wedget.viewimage.SliderTypes.BaseSliderView;
+import com.tiger.quicknews.wedget.viewimage.SliderTypes.BaseSliderView.OnSliderClickListener;
 import com.umeng.analytics.MobclickAgent;
 
 import org.androidannotations.annotations.AfterInject;
@@ -33,7 +37,8 @@ import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
 @EActivity(R.layout.activity_audio)
-public class AudioActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class AudioActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,
+OnSliderClickListener {
 	@ViewById(R.id.title)
 	protected TextView mTitle;
 	@ViewById(R.id.swipe_container)
@@ -44,15 +49,17 @@ public class AudioActivity extends BaseActivity implements SwipeRefreshLayout.On
 	protected ProgressBar mProgressBar;	
 		
 	private AudioAdapter audioAdapter = new AudioAdapter(this);
-	private List<NewModle> listsModles;	
+	private List<NewsModel> listsModles;	
 	private int currentPage = 1;
 	private int index = 0;
 	private boolean isRefresh;
 	private String cacheName = "audio";
+	private HashMap<String, NewsModel> newsModelsMap = new HashMap<String, NewsModel>();
+	
 	
 	@AfterInject
 	protected void init() {
-		listsModles = new ArrayList<NewModle>();
+		listsModles = new ArrayList<NewsModel>();
 	}
 	
 	private void loadData(String url) {
@@ -95,13 +102,9 @@ public class AudioActivity extends BaseActivity implements SwipeRefreshLayout.On
 	        mProgressBar.setVisibility(View.GONE);
 	        swipeLayout.setRefreshing(false);
 
-	        List<NewModle> list = NewListJson.instance(this).readJsonNewModles(result, Url.DianTaiId);
-//	        if (index == 0 && list.size() >= 4) {
-//	            initSliderLayout(list);
-//	        } else 
-//	        {
-	            audioAdapter.appendList(list);
-//	        }
+	        List<NewsModel> list = NewListJson.instance(this).readJsonNewModles(result, Url.DianTaiId);
+	        audioAdapter.appendList(list);
+	        updateUrlToNewsModelMap(newsModelsMap, list);
 	        listsModles.addAll(list);
 	        mListView.onBottomComplete();
 	    }
@@ -137,7 +140,7 @@ public class AudioActivity extends BaseActivity implements SwipeRefreshLayout.On
 	@ItemClick(R.id.listview)
 	protected void onItemClick(int position)
 	{
-		NewModle audioModel = listsModles.get(position - 1);
+		NewsModel audioModel = listsModles.get(position - 1);
 		// Play audio
 	}
 
@@ -172,4 +175,22 @@ public class AudioActivity extends BaseActivity implements SwipeRefreshLayout.On
     	String urlString = Url.CommonUrl + itemId + "/" + index + Url.endUrl;
         return urlString;
     }
+
+	@Override
+	public void onSliderClick(BaseSliderView slider) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private void updateUrlToNewsModelMap(HashMap<String, NewsModel> map, List<NewsModel> newsModels)
+	{
+		if(map == null)
+		{
+			map = new HashMap<String, NewsModel>();
+		}
+		for(NewsModel newsModel : newsModels)
+		{
+			map.put(newsModel.getImgsrc(), newsModel);
+		}
+	}
 }

@@ -8,13 +8,32 @@
     android:paddingRight="8.0dip"    
     android:paddingTop="8.0dip" 
     android:paddingBottom="8.0dip">
-    <ImageView 
-        android:id="@+id/audio_icon"
+    <FrameLayout
+        android:id="@+id/image_area"
         android:layout_width="@dimen/right_image_width"
-        android:layout_height="@dimen/right_image_height"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:scaleType="centerCrop"/>
+       	android:layout_height="@dimen/right_image_height">
+    	<ImageView 
+        	android:id="@+id/audio_icon"
+        	android:layout_width="@dimen/right_image_width"
+        	android:layout_height="@dimen/right_image_height"
+        	android:layout_alignParentLeft="true"
+        	android:layout_centerVertical="true"
+        	android:scaleType="centerCrop"/>
+    	<ImageView
+    	    android:id="@+id/quick_play_audio"
+    	    android:layout_width="@dimen/left_image_play_width"
+    	    android:layout_height="@dimen/left_image_play_height"
+    	    android:layout_gravity="center"
+    	    android:src="@drawable/biz_special_news_cover"
+    	    android:visibility="gone" />
+		<ImageView
+		    android:id="@+id/quick_qause_audio"
+		    android:layout_width="@dimen/left_image_play_width"
+		    android:layout_height="@dimen/left_image_play_height"
+		    android:layout_gravity="center"
+		    android:src="@drawable/titlebar_refresh_detail_cancel"
+		    android:visibility="gone" />
+    </FrameLayout>
     <TextView
         android:id="@+id/audio_title"
         style="@style/item_title"
@@ -22,8 +41,8 @@
         android:layout_height="wrap_content" 
         android:layout_marginLeft="10dp"
         android:singleLine="true"
-        android:layout_toRightOf="@+id/audio_icon"
-        android:layout_alignTop="@id/audio_icon" />
+        android:layout_toRightOf="@+id/image_area"
+        android:layout_alignTop="@id/image_area" />
     <TextView
         android:id="@+id/audio_content"
         android:layout_width="wrap_content"
