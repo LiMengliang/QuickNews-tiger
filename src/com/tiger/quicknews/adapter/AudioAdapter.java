@@ -6,8 +6,8 @@ import java.util.List;
 import org.androidannotations.annotations.EBean;
 
 import com.tiger.quicknews.bean.NewsDigestModel;
-import com.tiger.quicknews.view.AudioItemView;
-import com.tiger.quicknews.view.AudioItemView_;
+import com.tiger.quicknews.view.AudioDigestView;
+import com.tiger.quicknews.view.AudioDigestView_;
 
 import android.content.Context;
 import android.view.View;
@@ -52,14 +52,14 @@ public class AudioAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		AudioItemView audioItemView;
+		AudioDigestView audioItemView;
 		if(convertView == null)
 		{
-			audioItemView = AudioItemView_.build(_context);	
+			audioItemView = AudioDigestView_.build(_context);	
 		}
 		else
 		{
-			audioItemView = (AudioItemView) convertView;
+			audioItemView = (AudioDigestView) convertView;
 		}
 		NewsDigestModel newsModel = lists.get(position);
 		audioItemView.updateNewsModel(newsModel);

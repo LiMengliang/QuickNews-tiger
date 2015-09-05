@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import android.media.MediaPlayer;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
@@ -23,6 +24,7 @@ import com.tiger.quicknews.http.json.NewListJson;
 import com.tiger.quicknews.initview.InitView;
 import com.tiger.quicknews.utils.ACache;
 import com.tiger.quicknews.utils.StringUtils;
+import com.tiger.quicknews.view.AudioDigestView;
 import com.tiger.quicknews.wedget.swiptlistview.SwipeListView;
 import com.tiger.quicknews.wedget.viewimage.SliderTypes.BaseSliderView;
 import com.tiger.quicknews.wedget.viewimage.SliderTypes.BaseSliderView.OnSliderClickListener;
@@ -47,6 +49,8 @@ OnSliderClickListener {
 	protected SwipeListView mListView;
 	@ViewById(R.id.progressBar)
 	protected ProgressBar mProgressBar;	
+	
+	public MediaPlayer mediaPlayer;
 		
 	private AudioAdapter audioAdapter = new AudioAdapter(this);
 	private List<NewsDigestModel> listsModles;	
@@ -55,11 +59,14 @@ OnSliderClickListener {
 	private boolean isRefresh;
 	private String cacheName = "audio";
 	private HashMap<String, NewsDigestModel> newsModelsMap = new HashMap<String, NewsDigestModel>();
+	private List<AudioDigestView> audioDigestViews = new ArrayList<AudioDigestView>();
+	private AudioDigestView activeAudioDigestView = null;
 	
 	
 	@AfterInject
 	protected void init() {
 		listsModles = new ArrayList<NewsDigestModel>();
+		mediaPlayer = new MediaPlayer();
 	}
 	
 	private void loadData(String url) {
@@ -180,6 +187,31 @@ OnSliderClickListener {
 	public void onSliderClick(BaseSliderView slider) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void addAudioDigestView(AudioDigestView audioDigestView)
+	{
+		audioDigestViews.add(audioDigestView);
+	}
+	
+	public void updateActiveAudioDigestView(AudioDigestView audioDigestView)
+	{
+		if(audioDigestView == null)
+		{
+			activeAudioDigestView = null;
+			return;
+		}
+		if(activeAudioDigestView == null)
+		{
+			audioDigestView.activate();
+			activeAudioDigestView = audioDigestView;
+		}
+		else if(activeAudioDigestView != null && activeAudioDigestView != audioDigestView)
+		{
+			activeAudioDigestView.deactivate();
+			audioDigestView.activate();
+			activeAudioDigestView = audioDigestView;
+		}			
 	}
 	
 	private void updateUrlToNewsModelMap(HashMap<String, NewsDigestModel> map, List<NewsDigestModel> newsModels)
