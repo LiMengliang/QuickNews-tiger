@@ -16,7 +16,7 @@ import com.tiger.quicknews.adapter.CardsAnimationAdapter;
 import com.tiger.quicknews.adapter.VideoAdapter;
 import com.tiger.quicknews.bean.VideoModle;
 import com.tiger.quicknews.http.HttpUtil;
-import com.tiger.quicknews.http.Url;
+import com.tiger.quicknews.http.UrlUtils;
 import com.tiger.quicknews.http.json.ViedoListJson;
 import com.tiger.quicknews.initview.InitView;
 import com.tiger.quicknews.utils.StringUtils;
@@ -70,14 +70,14 @@ public class VideoYuLeFragment extends BaseFragment implements
         AnimationAdapter animationAdapter = new CardsAnimationAdapter(videoAdapter);
         animationAdapter.setAbsListView(mListView);
         mListView.setAdapter(animationAdapter);
-        loadData(getVideoUrl(index + "", Url.VideoYuLeId));
+        loadData(getVideoUrl(index + "", UrlUtils.VideoYuLeId));
 
         mListView.setOnBottomListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 currentPagte++;
                 index = index + 10;
-                loadData(getVideoUrl(index + "", Url.VideoYuLeId));
+                loadData(getVideoUrl(index + "", UrlUtils.VideoYuLeId));
             }
         });
     }
@@ -103,7 +103,7 @@ public class VideoYuLeFragment extends BaseFragment implements
             public void run() {
                 currentPagte = 1;
                 isRefresh = true;
-                loadData(getVideoUrl(0 + "", Url.VideoYuLeId));
+                loadData(getVideoUrl(0 + "", UrlUtils.VideoYuLeId));
             }
         }, 2000);
     }
@@ -144,7 +144,7 @@ public class VideoYuLeFragment extends BaseFragment implements
 
         List<VideoModle> list =
                 ViedoListJson.instance(getActivity()).readJsonVideoModles(result,
-                        Url.VideoYuLeId);
+                        UrlUtils.VideoYuLeId);
         videoAdapter.appendList(list);
         listsModles.addAll(list);
         mListView.onBottomComplete();

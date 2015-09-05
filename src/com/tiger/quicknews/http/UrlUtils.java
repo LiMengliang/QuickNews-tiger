@@ -4,7 +4,7 @@ package com.tiger.quicknews.http;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-public class Url {
+public class UrlUtils {
     public static final String host = "http://c.m.163.com/";
     public static final String endUrl = "-20.html";
     public static final String endDetailUrl = "/full.html";
@@ -135,9 +135,9 @@ public class Url {
      * @param newsId 新闻ID
      * @return 相应的URL
      */
-    public static String getUrl(String newsId)
+    public static String getNewsDetailUrl(String newsId)
     {
-    	return Url.NewDetail + newsId + Url.endDetailUrl;
+    	return UrlUtils.NewDetail + newsId + UrlUtils.endDetailUrl;
     }
     
     /**
@@ -147,7 +147,7 @@ public class Url {
      * @return
      */
     public static String getMsgUrl(String index, String itemId) {
-        String urlString = Url.CommonUrl + itemId + "/" + index + "-40.html";
+        String urlString = UrlUtils.CommonUrl + itemId + "/" + index + "-40.html";
         return urlString;
     }
 
@@ -158,7 +158,7 @@ public class Url {
      */
     public static String getWeatherUrl(String cityName) throws UnsupportedEncodingException {
         // + Url.WeatherKey
-        String urlString = Url.WeatherHost + URLEncoder.encode(cityName, "utf-8");
+        String urlString = UrlUtils.WeatherHost + URLEncoder.encode(cityName, "utf-8");
         return urlString;
     }
 }

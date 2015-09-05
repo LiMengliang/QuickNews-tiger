@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.androidannotations.annotations.EBean;
 
-import com.tiger.quicknews.bean.NewsModel;
+import com.tiger.quicknews.bean.NewsDigestModel;
 import com.tiger.quicknews.view.AudioItemView;
 import com.tiger.quicknews.view.AudioItemView_;
 
@@ -23,9 +23,9 @@ public class AudioAdapter extends BaseAdapter {
 		_context = context;
 	}
 	
-	public List<NewsModel> lists = new ArrayList<NewsModel>();
+	public List<NewsDigestModel> lists = new ArrayList<NewsDigestModel>();
 	
-	public void appendList(List<NewsModel> list) {
+	public void appendList(List<NewsDigestModel> list) {
 		if(!lists.containsAll(list) && list != null && list.size() > 0)
 		{
 			lists.addAll(list);
@@ -61,7 +61,7 @@ public class AudioAdapter extends BaseAdapter {
 		{
 			audioItemView = (AudioItemView) convertView;
 		}
-		NewsModel newsModel = lists.get(position);
+		NewsDigestModel newsModel = lists.get(position);
 		audioItemView.updateNewsModel(newsModel);
 		return audioItemView;
 	}

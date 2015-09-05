@@ -1,7 +1,7 @@
 
 package com.tiger.quicknews.bean;
 
-public class WeatherModle extends BaseModle {
+public class WeatherModle extends BaseModel {
     /**
      * 
      */

@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ChannelManage {
-    public static ChannelManage channelManage;
+public class ChannelManager {
+    public static ChannelManager channelManage;
     /**
      * 默认的用户选择频道列表
      */
@@ -62,7 +62,7 @@ public class ChannelManage {
     	allChannels.add(new ChannelItem(31, "亲子", 25, 0));
     }
 
-    private ChannelManage(SQLHelper paramDBHelper) throws SQLException {
+    private ChannelManager(SQLHelper paramDBHelper) throws SQLException {
         if (channelDao == null)
             channelDao = new ChannelDao(paramDBHelper.getContext());
         // NavigateItemDao(paramDBHelper.getDao(NavigateItem.class));
@@ -78,13 +78,13 @@ public class ChannelManage {
     		ChannelItem channelItem = allChannels.get(i);
             channelItem.setOrderId(i);
             channelItem.setSelected(Integer.valueOf(1));
-            channelDao.addCache(channelItem);
+            channelDao.addChannel(channelItem);
     	}
         for (int i = 8; i < allChannels.size(); i++) {
             ChannelItem channelItem = allChannels.get(i);
             channelItem.setOrderId(i);
             channelItem.setSelected(Integer.valueOf(0));
-            channelDao.addCache(channelItem);
+            channelDao.addChannel(channelItem);
         }  
     }
 
@@ -94,11 +94,11 @@ public class ChannelManage {
      * @param paramDBHelper
      * @throws SQLException
      */
-    public static ChannelManage getManage(SQLHelper dbHelper) throws SQLException {
+    public static ChannelManager getManage(SQLHelper dbHelper) throws SQLException {
         if (channelManage == null)
-            synchronized (ChannelManage.class) {
+            synchronized (ChannelManager.class) {
                 if (channelManage == null) {
-                    channelManage = new ChannelManage(dbHelper);
+                    channelManage = new ChannelManager(dbHelper);
                     // channelManage.initializeIfNoSelectedChannel();
                 }
             }
@@ -117,8 +117,8 @@ public class ChannelManage {
      * 
      * @return 数据库存在用户配置 ? 数据库内的用户选择频道 : 默认用户选择频道 ;
      */
-    public List<ChannelItem> getUserChannel() {
-        Object cacheList = channelDao.listCache(SQLHelper.SELECTED + "= ?", new String[] {
+    public List<ChannelItem> getSelectedChannel() {
+        Object cacheList = channelDao.listChannels(SQLHelper.SELECTED + "= ?", new String[] {
                 "1"
         });
         if(((List<?>) cacheList).isEmpty())
@@ -148,8 +148,8 @@ public class ChannelManage {
      * 
      * @return 数据库存在用户配置 ? 数据库内的其它频道 : 默认其它频道 ;
      */
-    public List<ChannelItem> getOtherChannel() {
-        Object cacheList = channelDao.listCache(SQLHelper.SELECTED + "= ?", new String[] {
+    public List<ChannelItem> getUnselectedChannel() {
+        Object cacheList = channelDao.listChannels(SQLHelper.SELECTED + "= ?", new String[] {
                 "0"
         });
         List<ChannelItem> list = new ArrayList<ChannelItem>();
@@ -178,12 +178,12 @@ public class ChannelManage {
      * 
      * @param userList
      */
-    public void saveUserChannel(List<ChannelItem> userList) {
+    public void saveSelectedChannel(List<ChannelItem> userList) {
         for (int i = 0; i < userList.size(); i++) {
             ChannelItem channelItem = userList.get(i);
             channelItem.setOrderId(i);
             channelItem.setSelected(Integer.valueOf(1));
-            channelDao.addCache(channelItem);
+            channelDao.addChannel(channelItem);
         }
     }
 
@@ -193,7 +193,7 @@ public class ChannelManage {
         values.put("id", channelItem.getId());
         values.put("name", channelItem.getName());
         values.put("orderId", channelItem.getOrderId());
-        channelDao.updateCache(values, " name = ?", new String[] {
+        channelDao.updateChannel(values, " name = ?", new String[] {
                 channelItem.getName()
         });
     }
@@ -234,12 +234,12 @@ public class ChannelManage {
      * 
      * @param otherList
      */
-    public void saveOtherChannel(List<ChannelItem> otherList) {
+    public void saveUnselectedChannel(List<ChannelItem> otherList) {
         for (int i = 0; i < otherList.size(); i++) {
             ChannelItem channelItem = otherList.get(i);
             channelItem.setOrderId(i);
             channelItem.setSelected(Integer.valueOf(0));
-            channelDao.addCache(channelItem);
+            channelDao.addChannel(channelItem);
         }
     }
 
@@ -249,7 +249,7 @@ public class ChannelManage {
     private void initDefaultChannel() {
         Log.d("deleteAll", "deleteAll");
         deleteAllChannel();
-        saveUserChannel(defaultUserChannels);
-        saveOtherChannel(defaultOtherChannels);
+        saveSelectedChannel(defaultUserChannels);
+        saveUnselectedChannel(defaultOtherChannels);
     }
 }

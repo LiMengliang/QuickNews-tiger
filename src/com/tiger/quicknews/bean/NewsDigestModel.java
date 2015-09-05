@@ -3,7 +3,7 @@ package com.tiger.quicknews.bean;
 
 import java.util.List;
 
-public class NewsModel extends BaseModle {
+public class NewsDigestModel extends BaseModel {
     /**
      * 
      */
@@ -39,7 +39,7 @@ public class NewsModel extends BaseModle {
     /**
      * �б�
      */
-    private ImagesModle imagesModle;
+    private ImagesModel imagesModle;
 
     public String getTag() {
         return tag;
@@ -49,20 +49,20 @@ public class NewsModel extends BaseModle {
         this.tag = tag;
     }
 
-    public ImagesModle getImagesModle() {
+    public ImagesModel getImagesModle() {
         return imagesModle;
     }
 
-    public void setImagesModle(ImagesModle imagesModle) {
+    public void setImagesModle(ImagesModel imagesModle) {
         this.imagesModle = imagesModle;
     }
 
     /**
      * ͷ���б�
      */
-    private List<ImagesModle> imgHeadLists;
+    private List<ImagesModel> imgHeadLists;
 
-    public List<ImagesModle> getImgHeadLists() {
+    public List<ImagesModel> getImgHeadLists() {
         return imgHeadLists;
     }
 
@@ -82,7 +82,7 @@ public class NewsModel extends BaseModle {
         this.ptime = ptime;
     }
 
-    public void setImgHeadLists(List<ImagesModle> imgHeadLists) {
+    public void setImgHeadLists(List<ImagesModel> imgHeadLists) {
         this.imgHeadLists = imgHeadLists;
     }
 

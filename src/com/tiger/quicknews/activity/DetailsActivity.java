@@ -20,9 +20,9 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener;
 import com.tiger.quicknews.R;
 import com.tiger.quicknews.bean.NewsDetailModel;
-import com.tiger.quicknews.bean.NewsModel;
+import com.tiger.quicknews.bean.NewsDigestModel;
 import com.tiger.quicknews.http.HttpUtil;
-import com.tiger.quicknews.http.Url;
+import com.tiger.quicknews.http.UrlUtils;
 import com.tiger.quicknews.http.json.NewDetailJson;
 import com.tiger.quicknews.utils.Options;
 import com.tiger.quicknews.utils.StringUtils;
@@ -60,7 +60,7 @@ public class DetailsActivity extends BaseActivity implements ImageLoadingListene
     @ViewById(R.id.play)
     protected ImageView mPlay;
     private String newUrl;
-    private NewsModel newModle;
+    private NewsDigestModel newModle;
     private String newID;
     protected ImageLoader imageLoader;
     private String imgCountString;
@@ -72,9 +72,9 @@ public class DetailsActivity extends BaseActivity implements ImageLoadingListene
     @AfterInject
     public void init() {
         try {
-            newModle = (NewsModel) getIntent().getExtras().getSerializable("newModle");
+            newModle = (NewsDigestModel) getIntent().getExtras().getSerializable("newModle");
             newID = newModle.getDocid();
-            newUrl = Url.getUrl(newID);
+            newUrl = UrlUtils.getNewsDetailUrl(newID);
             imageLoader = ImageLoader.getInstance();
             options = Options.getListOptions();
         } catch (Exception e) {

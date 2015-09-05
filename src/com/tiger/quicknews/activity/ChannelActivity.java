@@ -24,7 +24,7 @@ import com.tiger.quicknews.R;
 import com.tiger.quicknews.adapter.DragAdapter;
 import com.tiger.quicknews.adapter.OtherAdapter;
 import com.tiger.quicknews.bean.ChannelItem;
-import com.tiger.quicknews.bean.ChannelManage;
+import com.tiger.quicknews.bean.ChannelManager;
 import com.tiger.quicknews.wedget.DragGrid;
 import com.tiger.quicknews.wedget.OtherGridView;
 import com.umeng.analytics.MobclickAgent;
@@ -81,10 +81,10 @@ public class ChannelActivity extends BaseActivity implements OnItemClickListener
     /** 初始化数据 */
     @Background
     void initData() {
-        userChannelList = ((ArrayList<ChannelItem>) ChannelManage.getManage(
-                App.getApp().getSQLHelper()).getUserChannel());
-        otherChannelList = ((ArrayList<ChannelItem>) ChannelManage.getManage(
-                App.getApp().getSQLHelper()).getOtherChannel());
+        userChannelList = ((ArrayList<ChannelItem>) ChannelManager.getManage(
+                App.getApp().getSQLHelper()).getSelectedChannel());
+        otherChannelList = ((ArrayList<ChannelItem>) ChannelManager.getManage(
+                App.getApp().getSQLHelper()).getUnselectedChannel());
         setData();
     }
 
@@ -109,7 +109,7 @@ public class ChannelActivity extends BaseActivity implements OnItemClickListener
         switch (parent.getId()) {
             case R.id.userGridView:
                 // position为 0，1 的不可以进行任何操作
-                if (position != 0 && position != 1) {
+                if (position != 0) {
                     final ImageView moveImageView = getView(view);
                     if (moveImageView != null) {
                         TextView newTextView = (TextView) view.findViewById(R.id.text_item);
@@ -132,7 +132,7 @@ public class ChannelActivity extends BaseActivity implements OnItemClickListener
                                     moveAnim(moveImageView, startLocation, endLocation, channel,
                                             userGridView);
                                     userAdapter.setRemove(position);
-                                    ChannelManage.getManage(App.getApp().getSQLHelper())
+                                    ChannelManager.getManage(App.getApp().getSQLHelper())
                                             .updateChannel(
                                                     channel, "0");
                                 } catch (Exception localException) {
@@ -164,7 +164,7 @@ public class ChannelActivity extends BaseActivity implements OnItemClickListener
                                 moveAnim(moveImageView, startLocation, endLocation, channel,
                                         otherGridView);
                                 otherAdapter.setRemove(position);
-                                ChannelManage.getManage(App.getApp().getSQLHelper()).updateChannel(
+                                ChannelManager.getManage(App.getApp().getSQLHelper()).updateChannel(
                                         channel, "1");
                             } catch (Exception localException) {
                             }
@@ -286,10 +286,10 @@ public class ChannelActivity extends BaseActivity implements OnItemClickListener
 
     /** 退出时候保存选择后数据库的设置 */
     void saveChannel() {
-        ChannelManage.getManage(App.getApp().getSQLHelper()).deleteAllChannel();
-        ChannelManage.getManage(App.getApp().getSQLHelper()).saveUserChannel(
+        ChannelManager.getManage(App.getApp().getSQLHelper()).deleteAllChannel();
+        ChannelManager.getManage(App.getApp().getSQLHelper()).saveSelectedChannel(
                 userAdapter.getChannnelLst());
-        ChannelManage.getManage(App.getApp().getSQLHelper()).saveOtherChannel(
+        ChannelManager.getManage(App.getApp().getSQLHelper()).saveUnselectedChannel(
                 otherAdapter.getChannnelLst());
     }
 

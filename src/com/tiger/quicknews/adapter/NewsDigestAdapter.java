@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.tiger.quicknews.bean.NewsModel;
+import com.tiger.quicknews.bean.NewsDigestModel;
 
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
@@ -19,11 +19,11 @@ import java.util.List;
 
 @EBean
 public class NewsDigestAdapter extends BaseAdapter {
-    public List<NewsModel> lists = new ArrayList<NewsModel>();
+    public List<NewsDigestModel> lists = new ArrayList<NewsDigestModel>();
 
     private String currentItem;
 
-    public void appendList(List<NewsModel> list) {
+    public void appendList(List<NewsDigestModel> list) {
         if (!lists.containsAll(list) && list != null && list.size() > 0) {
             lists.addAll(list);
         }
@@ -68,7 +68,7 @@ public class NewsDigestAdapter extends BaseAdapter {
             newItemView = (NewsDigestView) convertView;
         }
 
-        NewsModel newModle = lists.get(position);
+        NewsDigestModel newModle = lists.get(position);
         if (newModle.getImagesModle() == null) {
             newItemView.setTexts(newModle.getTitle(), newModle.getDigest(), newModle.getSource(),
                     newModle.getImgsrc(), currentItem);

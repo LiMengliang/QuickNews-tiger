@@ -5,7 +5,7 @@ import com.tiger.quicknews.R;
 import com.tiger.quicknews.adapter.PicuterDetailAdapter;
 import com.tiger.quicknews.bean.PicuterDetailModle;
 import com.tiger.quicknews.http.HttpUtil;
-import com.tiger.quicknews.http.Url;
+import com.tiger.quicknews.http.UrlUtils;
 import com.tiger.quicknews.http.json.PicuterSinaJson;
 import com.tiger.quicknews.utils.StringUtils;
 import com.tiger.quicknews.wedget.flipview.FlipView;
@@ -41,7 +41,7 @@ public class PicuterDetailActivity extends BaseActivity implements OnFlipListene
             if (getIntent().getExtras().getString("pic_id") != null) {
                 imgUrl = getIntent().getExtras().getString("pic_id");
                 showProgressDialog();
-                loadData(Url.JINGXUANDETAIL_ID + imgUrl);
+                loadData(UrlUtils.JINGXUANDETAIL_ID + imgUrl);
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,7 +1,7 @@
 
 package com.tiger.quicknews.bean;
 
-public class VideoModle extends BaseModle {
+public class VideoModle extends BaseModel {
     /**
      * 
      */

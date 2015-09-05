@@ -1,7 +1,7 @@
 
 package com.tiger.quicknews.db;
 
-import com.tiger.quicknews.bean.ChannelManage;
+import com.tiger.quicknews.bean.ChannelManager;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

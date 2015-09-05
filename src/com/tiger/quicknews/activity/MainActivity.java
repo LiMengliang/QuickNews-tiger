@@ -20,9 +20,9 @@ import com.tiger.quicknews.App;
 import com.tiger.quicknews.R;
 import com.tiger.quicknews.adapter.NewsFragmentPagerAdapter;
 import com.tiger.quicknews.bean.ChannelItem;
-import com.tiger.quicknews.bean.ChannelManage;
+import com.tiger.quicknews.bean.ChannelManager;
 import com.tiger.quicknews.fragment.*;
-import com.tiger.quicknews.http.Url;
+import com.tiger.quicknews.http.UrlUtils;
 import com.tiger.quicknews.initview.SlidingMenuView;
 import com.tiger.quicknews.utils.BaseTools;
 import com.tiger.quicknews.view.*;
@@ -169,8 +169,8 @@ public class MainActivity extends BaseActivity {
 
     /** 获取Column栏目 数据 */
     private void initColumnData() {
-        userChannelLists = ((ArrayList<ChannelItem>) ChannelManage.getManage(
-                App.getApp().getSQLHelper()).getUserChannel());
+        userChannelLists = ((ArrayList<ChannelItem>) ChannelManager.getManage(
+                App.getApp().getSQLHelper()).getSelectedChannel());
         initTabColumn();
         initFragment();
     }
@@ -226,7 +226,7 @@ public class MainActivity extends BaseActivity {
      * 初始化Fragment
      */
     private void initFragment() {
-    	List<ChannelItem> userChannels = ChannelManage.getManage(App.getApp().getSQLHelper()).getUserChannel();
+    	List<ChannelItem> userChannels = ChannelManager.getManage(App.getApp().getSQLHelper()).getSelectedChannel();
         fragments.clear();
         int count = userChannels.size();
         for (int i = 0; i < count; i++) {
@@ -247,61 +247,61 @@ public class MainActivity extends BaseActivity {
         if (channelName.equals("头条")) {
         	newfragment = new NewsFragment_();
         } else if (channelName.equals("足球")) {
-        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(Url.FootId, "FoodBallFragment");
+        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(UrlUtils.FootId, "FoodBallFragment");
         } else if (channelName.equals("娱乐")) {
-        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(Url.YuLeId, "YuLeFragment");
+        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(UrlUtils.YuLeId, "YuLeFragment");
         } else if (channelName.equals("体育")) {
-        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(Url.TiYuId, "TiYuFragment");
+        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(UrlUtils.TiYuId, "TiYuFragment");
         } else if (channelName.equals("财经")) {
-        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(Url.CaiJingId, "CaiJingFragment");
+        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(UrlUtils.CaiJingId, "CaiJingFragment");
         } else if (channelName.equals("科技")) {
-        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(Url.KeJiId, "KeJiFragment");
+        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(UrlUtils.KeJiId, "KeJiFragment");
         } else if (channelName.equals("电影")) {
-        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(Url.DianYingId, "DianYingFragment");
+        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(UrlUtils.DianYingId, "DianYingFragment");
         } else if (channelName.equals("汽车")) {
-        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(Url.QiChiId, "QiCheFragment");
+        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(UrlUtils.QiChiId, "QiCheFragment");
         } else if (channelName.equals("笑话")) {
-        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(Url.XiaoHuaId, "XiaoHuaFragment");
+        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(UrlUtils.XiaoHuaId, "XiaoHuaFragment");
         } else if (channelName.equals("时尚")) {
-        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(Url.ShiShangId, "ShiShangFragment");
+        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(UrlUtils.ShiShangId, "ShiShangFragment");
         } else if (channelName.equals("军事")) {
-        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(Url.JunShiId, "JunShiFragment");
+        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(UrlUtils.JunShiId, "JunShiFragment");
         } else if (channelName.equals("游戏")) {
-        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(Url.YouXiId, "YouXiFragment");
+        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(UrlUtils.YouXiId, "YouXiFragment");
         } else if (channelName.equals("情感")) {
-        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(Url.QingGanId, "QinGanFragment");
+        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(UrlUtils.QingGanId, "QinGanFragment");
         } else if (channelName.equals("精选")) {
-        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(Url.JingXuanId, "JiaoYuFragment");
+        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(UrlUtils.JingXuanId, "JiaoYuFragment");
         } else if (channelName.equals("电台")) {
-        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(Url.DianTaiId, "DianTaiFragment");
+        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(UrlUtils.DianTaiId, "DianTaiFragment");
         } else if (channelName.equals("NBA")) {
-        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(Url.NBAId, "NBAFragment");
+        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(UrlUtils.NBAId, "NBAFragment");
         } else if (channelName.equals("数码")) {
-        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(Url.ShuMaId, "ShuMaFragment");
+        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(UrlUtils.ShuMaId, "ShuMaFragment");
         } else if (channelName.equals("移动")) {
-        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(Url.YiDongId, "YiDongFragment");
+        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(UrlUtils.YiDongId, "YiDongFragment");
         } else if (channelName.equals("彩票")) {
-        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(Url.CaiPiaoId, "CaiPiaoFragment");
+        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(UrlUtils.CaiPiaoId, "CaiPiaoFragment");
         } else if (channelName.equals("教育")) {
-        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(Url.JiaoYuId, "JiaoYuFragment");
+        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(UrlUtils.JiaoYuId, "JiaoYuFragment");
         } else if (channelName.equals("论坛")) {
-        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(Url.LunTanId, "LunTanFragment");
+        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(UrlUtils.LunTanId, "LunTanFragment");
         } else if (channelName.equals("旅游")) {
-        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(Url.LvYouId, "LvYouFragment");
+        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(UrlUtils.LvYouId, "LvYouFragment");
         } else if (channelName.equals("手机")) {
-        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(Url.ShouJiId, "ShouJiFragment");
+        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(UrlUtils.ShouJiId, "ShouJiFragment");
         } else if (channelName.equals("博客")) {
-        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(Url.BoKeId, "BoKeFragment");
+        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(UrlUtils.BoKeId, "BoKeFragment");
         } else if (channelName.equals("社会")) {
-        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(Url.SheHuiId, "SheHuiFragment");
+        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(UrlUtils.SheHuiId, "SheHuiFragment");
         } else if (channelName.equals("家居")) {
-        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(Url.JiaJuId, "JiaJuFragment");
+        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(UrlUtils.JiaJuId, "JiaJuFragment");
         } else if (channelName.equals("暴雪")) {
-        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(Url.BaoXueId, "BaoXueYouXiFragment");
+        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(UrlUtils.BaoXueId, "BaoXueYouXiFragment");
         } else if (channelName.equals("亲子")) {
-        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(Url.QinZiId, "QinZiFragment");
+        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(UrlUtils.QinZiId, "QinZiFragment");
         } else if (channelName.equals("CBA")) {
-        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(Url.CBAId, "CBAFragment");
+        	newfragment = BaseNewsListFragmentFactory.createBaseChannelListFragment(UrlUtils.CBAId, "CBAFragment");
         } else if (channelName.equals("北京")) {
             newfragment = new BeiJingFragment_();
         } else if (channelName.equals("图片")) {

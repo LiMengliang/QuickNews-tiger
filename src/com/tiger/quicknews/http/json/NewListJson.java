@@ -3,8 +3,8 @@ package com.tiger.quicknews.http.json;
 
 import android.content.Context;
 
-import com.tiger.quicknews.bean.ImagesModle;
-import com.tiger.quicknews.bean.NewsModel;
+import com.tiger.quicknews.bean.ImagesModel;
+import com.tiger.quicknews.bean.NewsDigestModel;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -16,7 +16,7 @@ public class NewListJson extends JsonPacket {
 
     public static NewListJson newListJson;
 
-    public List<NewsModel> newModles;
+    public List<NewsDigestModel> newModles;
 
     public NewListJson(Context context) {
         super(context);
@@ -29,13 +29,13 @@ public class NewListJson extends JsonPacket {
         return newListJson;
     }
 
-    public List<NewsModel> readJsonNewModles(String res, String value) {
-        newModles = new ArrayList<NewsModel>();
+    public List<NewsDigestModel> readJsonNewModles(String res, String value) {
+        newModles = new ArrayList<NewsDigestModel>();
         try {
             if (res == null || res.equals("")) {
                 return null;
             }
-            NewsModel newModle = null;
+            NewsDigestModel newModle = null;
             JSONObject jsonObject = new JSONObject(res);
             JSONArray jsonArray = jsonObject.getJSONArray(value);
             // if (isFirst) {
@@ -47,7 +47,7 @@ public class NewListJson extends JsonPacket {
             // }
 
             for (int i = 1; i < jsonArray.length(); i++) {
-                newModle = new NewsModel();
+                newModle = new NewsDigestModel();
                 JSONObject js = jsonArray.getJSONObject(i);
 //                if (js.has("skipType") && js.getString("skipType").equals("special")) {
 //                    continue;
@@ -58,7 +58,7 @@ public class NewListJson extends JsonPacket {
                 if (js.has("imgextra")) {
                     newModle.setTitle(getString("title", js));
                     newModle.setDocid(getString("docid", js));
-                    ImagesModle imagesModle = new ImagesModle();
+                    ImagesModel imagesModle = new ImagesModel();
                     List<String> list;
                     list = readImgList(js.getJSONArray("imgextra"));
                     list.add(getString("imgsrc", js));
@@ -101,8 +101,8 @@ public class NewListJson extends JsonPacket {
      * @return
      * @throws Exception
      */
-    public NewsModel readNewModle(JSONObject jsonObject) throws Exception {
-        NewsModel newModle = null;
+    public NewsDigestModel readNewModle(JSONObject jsonObject) throws Exception {
+        NewsDigestModel newModle = null;
 
         String docid = "";
         String title = "";
@@ -120,7 +120,7 @@ public class NewListJson extends JsonPacket {
         ptime = getString("ptime", jsonObject);
         tag = getString("TAG", jsonObject);
 
-        newModle = new NewsModel();
+        newModle = new NewsDigestModel();
 
         newModle.setDigest(digest);
         newModle.setDocid(docid);

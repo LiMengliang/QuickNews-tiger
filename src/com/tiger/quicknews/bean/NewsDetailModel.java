@@ -3,7 +3,7 @@ package com.tiger.quicknews.bean;
 
 import java.util.List;
 
-public class NewsDetailModel extends BaseModle {
+public class NewsDetailModel extends BaseModel {
     /**
      * 
      */

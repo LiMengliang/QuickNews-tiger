@@ -15,9 +15,9 @@ import com.tiger.quicknews.R;
 import com.tiger.quicknews.activity.*;
 import com.tiger.quicknews.adapter.CardsAnimationAdapter;
 import com.tiger.quicknews.adapter.NewsDigestAdapter;
-import com.tiger.quicknews.bean.NewsModel;
+import com.tiger.quicknews.bean.NewsDigestModel;
 import com.tiger.quicknews.http.HttpUtil;
-import com.tiger.quicknews.http.Url;
+import com.tiger.quicknews.http.UrlUtils;
 import com.tiger.quicknews.http.json.NewListJson;
 import com.tiger.quicknews.initview.InitView;
 import com.tiger.quicknews.utils.StringUtils;
@@ -54,14 +54,14 @@ public class BaseChannelListFragment extends BaseFragment implements SwipeRefres
     protected ProgressBar mProgressBar;
     protected HashMap<String, String> url_maps;
 
-    protected HashMap<String, NewsModel> newHashMap;
+    protected HashMap<String, NewsDigestModel> imgUrlAndNewsMap;
     
     public String channelId;
     public String cacheName;
 
     @Bean
-    protected NewsDigestAdapter newAdapter;
-    protected List<NewsModel> listsModles;
+    protected NewsDigestAdapter newsDigestsAdapter;
+    protected List<NewsDigestModel> newsDigests;
     private int index = 0;
     private boolean isRefresh = false;  
 
@@ -72,10 +72,10 @@ public class BaseChannelListFragment extends BaseFragment implements SwipeRefres
 
     @AfterInject
     protected void init() {
-        listsModles = new ArrayList<NewsModel>();
+        newsDigests = new ArrayList<NewsDigestModel>();
         url_maps = new HashMap<String, String>();
 
-        newHashMap = new HashMap<String, NewsModel>();
+        imgUrlAndNewsMap = new HashMap<String, NewsDigestModel>();
     }
 
     @AfterViews
@@ -87,7 +87,7 @@ public class BaseChannelListFragment extends BaseFragment implements SwipeRefres
         View headView = LayoutInflater.from(getActivity()).inflate(R.layout.head_item, null);
         mDemoSlider = (SliderLayout) headView.findViewById(R.id.slider);
         mListView.addHeaderView(headView);
-        AnimationAdapter animationAdapter = new CardsAnimationAdapter(newAdapter);
+        AnimationAdapter animationAdapter = new CardsAnimationAdapter(newsDigestsAdapter);
         animationAdapter.setAbsListView(mListView);
         mListView.setAdapter(animationAdapter);
         loadData(getNewsListUrl(index + "", channelId));
@@ -104,7 +104,7 @@ public class BaseChannelListFragment extends BaseFragment implements SwipeRefres
 
     private void loadData(String url) {
         if (HttpUtil.isNetworkAvailable(getMyActivity())) {
-            loadNewList(url);
+            loadNewsDigests(url);
         } else {
             mListView.onBottomComplete();
             mProgressBar.setVisibility(View.GONE);
@@ -116,16 +116,16 @@ public class BaseChannelListFragment extends BaseFragment implements SwipeRefres
         }
     }
 
-    private void initSliderLayout(List<NewsModel> newModles) {
+    private void initSliderLayout(List<NewsDigestModel> newModles) {
 
         if (!isNullString(newModles.get(0).getImgsrc()))
-            newHashMap.put(newModles.get(0).getImgsrc(), newModles.get(0));
+            imgUrlAndNewsMap.put(newModles.get(0).getImgsrc(), newModles.get(0));
         if (!isNullString(newModles.get(1).getImgsrc()))
-            newHashMap.put(newModles.get(1).getImgsrc(), newModles.get(1));
+            imgUrlAndNewsMap.put(newModles.get(1).getImgsrc(), newModles.get(1));
         if (!isNullString(newModles.get(2).getImgsrc()))
-            newHashMap.put(newModles.get(2).getImgsrc(), newModles.get(2));
+            imgUrlAndNewsMap.put(newModles.get(2).getImgsrc(), newModles.get(2));
         if (!isNullString(newModles.get(3).getImgsrc()))
-            newHashMap.put(newModles.get(3).getImgsrc(), newModles.get(3));
+            imgUrlAndNewsMap.put(newModles.get(3).getImgsrc(), newModles.get(3));
 
         if (!isNullString(newModles.get(0).getImgsrc()))
             url_maps.put(newModles.get(0).getTitle(), newModles.get(0).getImgsrc());
@@ -151,7 +151,7 @@ public class BaseChannelListFragment extends BaseFragment implements SwipeRefres
         mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Default);
         mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Right_Bottom);
         mDemoSlider.setCustomAnimation(new DescriptionAnimation());
-        newAdapter.appendList(newModles);
+        newsDigestsAdapter.appendList(newModles);
     }
 
     @Override
@@ -170,11 +170,11 @@ public class BaseChannelListFragment extends BaseFragment implements SwipeRefres
 
     @ItemClick(R.id.listview)
     protected void onItemClick(int position) {
-        NewsModel newModle = listsModles.get(position - 1);
+        NewsDigestModel newModle = newsDigests.get(position - 1);
         enterDetailActivity(newModle);
     }
 
-    public void enterDetailActivity(NewsModel newModle) {
+    public void enterDetailActivity(NewsDigestModel newModle) {
         Bundle bundle = new Bundle();
         bundle.putSerializable("newModle", newModle);
         Class<?> class1;
@@ -188,7 +188,7 @@ public class BaseChannelListFragment extends BaseFragment implements SwipeRefres
     }
 
     @Background
-    void loadNewList(String url) {
+    void loadNewsDigests(String url) {
         String result;
         try {
             result = HttpUtil.getByHttpClient(getActivity(), url);
@@ -203,25 +203,25 @@ public class BaseChannelListFragment extends BaseFragment implements SwipeRefres
         getMyActivity().setCacheStr(cacheName + currentPagte, result);
         if (isRefresh) {
             isRefresh = false;
-            newAdapter.clear();
-            listsModles.clear();
+            newsDigestsAdapter.clear();
+            newsDigests.clear();
         }
         mProgressBar.setVisibility(View.GONE);
         swipeLayout.setRefreshing(false);
 
-        List<NewsModel> list = NewListJson.instance(getActivity()).readJsonNewModles(result, channelId);
+        List<NewsDigestModel> list = NewListJson.instance(getActivity()).readJsonNewModles(result, channelId);
         if (index == 0 && list.size() >= 4) {
             initSliderLayout(list);
         } else {
-            newAdapter.appendList(list);
+            newsDigestsAdapter.appendList(list);
         }
-        listsModles.addAll(list);
+        newsDigests.addAll(list);
         mListView.onBottomComplete();
     }
 
     @Override
     public void onSliderClick(BaseSliderView slider) {
-        NewsModel newModle = newHashMap.get(slider.getUrl());
+        NewsDigestModel newModle = imgUrlAndNewsMap.get(slider.getUrl());
         enterDetailActivity(newModle);
     }
 
@@ -239,7 +239,7 @@ public class BaseChannelListFragment extends BaseFragment implements SwipeRefres
     
     protected String getNewsListUrl(String index, String itemId)
     {
-    	String urlString = Url.CommonUrl + itemId + "/" + index + Url.endUrl;
+    	String urlString = UrlUtils.CommonUrl + itemId + "/" + index + UrlUtils.endUrl;
         return urlString;
     }
 }

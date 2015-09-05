@@ -1,7 +1,7 @@
 
 package com.tiger.quicknews.bean;
 
-public class PhotoDetailModle extends BaseModle {
+public class PhotoDetailModle extends BaseModel {
 
     /**
      * 

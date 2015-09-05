@@ -1,7 +1,7 @@
 
 package com.tiger.quicknews.bean;
 
-public class PicuterModle extends BaseModle {
+public class PicuterModle extends BaseModel {
 
     /**
      * 

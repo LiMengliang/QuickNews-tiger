@@ -21,7 +21,7 @@ public class ChannelDao implements ChannelDaoInface {
     }
 
     @Override
-    public boolean addCache(ChannelItem item) {
+    public boolean addChannel(ChannelItem item) {
         boolean flag = false;
         SQLiteDatabase database = null;
         long id = -1;
@@ -96,7 +96,7 @@ public class ChannelDao implements ChannelDaoInface {
     // }
 
     @Override
-    public boolean deleteCache(String whereClause, String[] whereArgs) {
+    public boolean deleteChannel(String whereClause, String[] whereArgs) {
         boolean flag = false;
         SQLiteDatabase database = null;
         int count = 0;
@@ -118,7 +118,7 @@ public class ChannelDao implements ChannelDaoInface {
     }
 
     @Override
-    public boolean updateCache(ContentValues values, String whereClause,
+    public boolean updateChannel(ContentValues values, String whereClause,
             String[] whereArgs) {
         boolean flag = false;
         SQLiteDatabase database = null;
@@ -142,7 +142,7 @@ public class ChannelDao implements ChannelDaoInface {
     }
 
     @Override
-    public Map<String, String> viewCache(String selection,
+    public Map<String, String> viewChannels(String selection,
             String[] selectionArgs) {
         SQLiteDatabase database = null;
         Cursor cursor = null;
@@ -178,7 +178,7 @@ public class ChannelDao implements ChannelDaoInface {
     }
 
     @Override
-    public List<Map<String, String>> listCache(String selection, String[] selectionArgs) {
+    public List<Map<String, String>> listChannels(String selection, String[] selectionArgs) {
         List<Map<String, String>> list = new ArrayList<Map<String, String>>();
         SQLiteDatabase database = null;
         Cursor cursor = null;

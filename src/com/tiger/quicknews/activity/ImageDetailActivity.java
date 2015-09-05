@@ -6,7 +6,7 @@ import android.widget.TextView;
 import com.tiger.quicknews.R;
 import com.tiger.quicknews.adapter.ImageAdapter;
 import com.tiger.quicknews.bean.NewsDetailModel;
-import com.tiger.quicknews.bean.NewsModel;
+import com.tiger.quicknews.bean.NewsDigestModel;
 import com.tiger.quicknews.wedget.flipview.FlipView;
 import com.tiger.quicknews.wedget.flipview.FlipView.OnFlipListener;
 import com.tiger.quicknews.wedget.flipview.FlipView.OnOverFlipListener;
@@ -28,7 +28,7 @@ public class ImageDetailActivity extends BaseActivity implements OnFlipListener,
     protected FlipView mFlipView;
     @ViewById(R.id.new_title)
     protected TextView newTitle;
-    private NewsModel newModle;
+    private NewsDigestModel newModle;
     @Bean
     protected ImageAdapter imageAdapter;
     private List<String> imgList;
@@ -44,7 +44,7 @@ public class ImageDetailActivity extends BaseActivity implements OnFlipListener,
                 imgList = newDetailModle.getImgList();
                 titleString = newDetailModle.getTitle();
             } else {
-                newModle = (NewsModel) getIntent().getExtras().getSerializable("newModle");
+                newModle = (NewsDigestModel) getIntent().getExtras().getSerializable("newModle");
                 imgList = newModle.getImagesModle().getImgList();
                 titleString = newModle.getTitle();
             }

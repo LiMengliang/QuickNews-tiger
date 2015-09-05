@@ -11,9 +11,9 @@ import android.widget.TextView;
 
 import com.tiger.quicknews.R;
 import com.tiger.quicknews.adapter.NewsDigestAdapter;
-import com.tiger.quicknews.bean.NewsModel;
+import com.tiger.quicknews.bean.NewsDigestModel;
 import com.tiger.quicknews.http.HttpUtil;
-import com.tiger.quicknews.http.Url;
+import com.tiger.quicknews.http.UrlUtils;
 import com.tiger.quicknews.http.json.NewListJson;
 import com.tiger.quicknews.initview.InitView;
 import com.tiger.quicknews.utils.StringUtils;
@@ -47,18 +47,18 @@ public class MessageActivity extends BaseActivity implements SwipeRefreshLayout.
     private boolean isRefresh = false;
     @Bean
     protected NewsDigestAdapter newAdapter;
-    protected List<NewsModel> listsModles;
+    protected List<NewsDigestModel> listsModles;
     private int index;
 
     @AfterViews
     public void initView() {
         try {
-            listsModles = new ArrayList<NewsModel>();
+            listsModles = new ArrayList<NewsDigestModel>();
             mTitle.setText("消息列表");
             swipeLayout.setOnRefreshListener(this);
             InitView.instance().initSwipeRefreshLayout(swipeLayout);
             InitView.instance().initListView(mListView, this);
-            loadData(Url.getMsgUrl(0 + "", Url.MsgId));
+            loadData(UrlUtils.getMsgUrl(0 + "", UrlUtils.MsgId));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -70,7 +70,7 @@ public class MessageActivity extends BaseActivity implements SwipeRefreshLayout.
             @Override
             public void run() {
                 isRefresh = true;
-                loadData(Url.getMsgUrl(0 + "", Url.MsgId));
+                loadData(UrlUtils.getMsgUrl(0 + "", UrlUtils.MsgId));
             }
         }, 2000);
     }
@@ -110,8 +110,8 @@ public class MessageActivity extends BaseActivity implements SwipeRefreshLayout.
         mProgressBar.setVisibility(View.GONE);
         swipeLayout.setRefreshing(false);
 
-        List<NewsModel> list = NewListJson.instance(this).readJsonNewModles(result,
-                Url.MsgId);
+        List<NewsDigestModel> list = NewListJson.instance(this).readJsonNewModles(result,
+                UrlUtils.MsgId);
         newAdapter.appendList(list);
         listsModles.addAll(list);
         mListView.onBottomComplete();
@@ -120,16 +120,16 @@ public class MessageActivity extends BaseActivity implements SwipeRefreshLayout.
     @Override
     public void onClick(View v) {
         index = index + 40;
-        loadData(Url.getMsgUrl(index + "", Url.MsgId));
+        loadData(UrlUtils.getMsgUrl(index + "", UrlUtils.MsgId));
     }
 
     @ItemClick(R.id.listview)
     protected void onItemClick(int position) {
-        NewsModel newModle = listsModles.get(position);
+        NewsDigestModel newModle = listsModles.get(position);
         enterDetailActivity(newModle);
     }
 
-    public void enterDetailActivity(NewsModel newModle) {
+    public void enterDetailActivity(NewsDigestModel newModle) {
         Bundle bundle = new Bundle();
         bundle.putSerializable("newModle", newModle);
         Class<?> class1;

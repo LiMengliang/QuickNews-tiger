@@ -9,17 +9,17 @@ import java.util.List;
 import java.util.Map;
 
 public interface ChannelDaoInface {
-    public boolean addCache(ChannelItem item);
+    public boolean addChannel(ChannelItem item);
 
-    public boolean deleteCache(String whereClause, String[] whereArgs);
+    public boolean deleteChannel(String whereClause, String[] whereArgs);
 
-    public boolean updateCache(ContentValues values, String whereClause,
+    public boolean updateChannel(ContentValues values, String whereClause,
             String[] whereArgs);
 
-    public Map<String, String> viewCache(String selection,
+    public Map<String, String> viewChannels(String selection,
             String[] selectionArgs);
 
-    public List<Map<String, String>> listCache(String selection,
+    public List<Map<String, String>> listChannels(String selection,
             String[] selectionArgs);
 
     public void clearFeedTable();

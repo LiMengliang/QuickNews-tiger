@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.tiger.quicknews.R;
 import com.tiger.quicknews.http.HttpUtil;
-import com.tiger.quicknews.http.Url;
+import com.tiger.quicknews.http.UrlUtils;
 import com.tiger.quicknews.listener.BackGestureListener;
 import com.tiger.quicknews.utils.ACache;
 import com.tiger.quicknews.utils.DialogUtil;

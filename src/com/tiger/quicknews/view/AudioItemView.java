@@ -10,9 +10,9 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.tiger.quicknews.R;
 import com.tiger.quicknews.bean.NewsDetailModel;
-import com.tiger.quicknews.bean.NewsModel;
+import com.tiger.quicknews.bean.NewsDigestModel;
 import com.tiger.quicknews.http.HttpUtil;
-import com.tiger.quicknews.http.Url;
+import com.tiger.quicknews.http.UrlUtils;
 import com.tiger.quicknews.http.json.NewDetailJson;
 import com.tiger.quicknews.utils.Options;
 
@@ -49,7 +49,7 @@ public class AudioItemView extends RelativeLayout implements ImageLoadingListene
 	private ImageLoader imageLoader = ImageLoader.getInstance();
 	private MediaPlayer mediaPlayer = null;
 	private String audioUrl;
-	private NewsModel newsModel;
+	private NewsDigestModel newsModel;
 	private Context context;
 	
 	public AudioItemView(Context context) {
@@ -58,7 +58,7 @@ public class AudioItemView extends RelativeLayout implements ImageLoadingListene
 		// TODO Auto-generated constructor stub
 	}
 
-	public void updateNewsModel(NewsModel newsModel)
+	public void updateNewsModel(NewsDigestModel newsModel)
 	{	
 		this.newsModel = newsModel;
 		audioTitle.setText(newsModel.getTitle());
@@ -86,7 +86,7 @@ public class AudioItemView extends RelativeLayout implements ImageLoadingListene
 	@Background
 	protected void setAudioUrlToMediaPlayer() {
 		String newsId = newsModel.getDocid();
-		String newsUrl = Url.getUrl(newsId);
+		String newsUrl = UrlUtils.getNewsDetailUrl(newsId);
 		String fullDetailContent;
 		try {
 			fullDetailContent = HttpUtil.getByHttpClient(context, newsUrl);
