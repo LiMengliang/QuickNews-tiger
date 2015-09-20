@@ -60,7 +60,7 @@ OnSliderClickListener {
 	private String cacheName = "audio";
 	private HashMap<String, NewsDigestModel> newsModelsMap = new HashMap<String, NewsDigestModel>();
 	private List<AudioDigestView> audioDigestViews = new ArrayList<AudioDigestView>();
-	private AudioDigestView activeAudioDigestView = null;
+	public AudioDigestView activeAudioDigestView = null;
 	
 	
 	@AfterInject

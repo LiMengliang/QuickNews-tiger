@@ -25,8 +25,13 @@ import com.tiger.quicknews.utils.ACache;
 import com.tiger.quicknews.utils.Options;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.media.AudioManager;
+import android.media.AudioManager.OnAudioFocusChangeListener;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.view.View;
@@ -37,7 +42,7 @@ import android.widget.TextView;
 import com.tiger.quicknews.activity.AudioActivity_;
 
 @EViewGroup(R.layout.item_audio)
-public class AudioDigestView extends RelativeLayout implements ImageLoadingListener {
+public class AudioDigestView extends RelativeLayout implements ImageLoadingListener, OnAudioFocusChangeListener {
 
 	@ViewById(R.id.audio_icon)
 	protected ImageView leftImage;
@@ -66,6 +71,7 @@ public class AudioDigestView extends RelativeLayout implements ImageLoadingListe
 	private NewsDigestModel newsModel;
 	private Context context;
 	private Handler timingHandler = new Handler();
+	private AudioManager audioManager = null;
 	private Runnable timingRunnable = new Runnable()
 	{
 		@Override
@@ -87,10 +93,44 @@ public class AudioDigestView extends RelativeLayout implements ImageLoadingListe
 			}
 		}		
 	};
+	private BroadcastReceiver noisyBroadcastReceiver = new BroadcastReceiver()
+	{
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			// TODO Auto-generated method stub
+			if (AudioManager.ACTION_AUDIO_BECOMING_NOISY.equals(intent.getAction()))	
+			{
+				((AudioActivity_)context).activeAudioDigestView.pauseAudio(((AudioActivity_)context).activeAudioDigestView);
+			}
+		}		
+	};
+	private	IntentFilter noisyIntentFilter = new IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
+	
+	@Override
+	public void onAudioFocusChange(int focusChangeStatus) {
+		// TODO Auto-generated method stub
+		switch(focusChangeStatus)
+		{
+			case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+				pauseAudio(this);
+				break;
+			case AudioManager.AUDIOFOCUS_LOSS:
+				mediaPlayer.stop();
+				audioManager.abandonAudioFocus(this);
+				break;
+			case AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK:
+				// lower audio
+				break;
+			default:
+				playAudio(this);
+				break;
+		}
+	}	
 		
 	public AudioDigestView(Context context) {
 		super(context);
 		this.context = context;
+		audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
 		((AudioActivity_)context).addAudioDigestView(this);
 		mediaPlayer = ((AudioActivity_)context).mediaPlayer;
 		// TODO Auto-generated constructor stub
@@ -112,6 +152,10 @@ public class AudioDigestView extends RelativeLayout implements ImageLoadingListe
 	@Click(R.id.quick_play_audio)
 	public void playAudio(View view)
 	{
+		// Get audio focus
+		int result = audioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK);	
+		// register broadcast receiver
+		context.registerReceiver(noisyBroadcastReceiver, noisyIntentFilter);
 		((AudioActivity_)context).updateActiveAudioDigestView(this);
 		setAudioUrlToMediaPlayer();
 		activate();

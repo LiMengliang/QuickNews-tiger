@@ -2,6 +2,7 @@
 package com.tiger.quicknews.view;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -16,12 +17,12 @@ import org.androidannotations.annotations.EViewGroup;
 public class LeftView extends LinearLayout {
 
     private final BaseActivity context;
-
+    
     public LeftView(Context context) {
         super(context);
         this.context = (BaseActivity) context;
     }
-
+    
     @Click(R.id.pics)
     public void enterPics(View view) {
         context.openActivity(TuPianSinaActivity_.class);
