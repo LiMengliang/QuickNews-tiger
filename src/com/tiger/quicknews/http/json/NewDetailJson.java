@@ -3,6 +3,7 @@ package com.tiger.quicknews.http.json;
 
 import android.content.Context;
 
+import com.tiger.quicknews.bean.ImageDetailModel;
 import com.tiger.quicknews.bean.NewsDetailModel;
 
 import org.json.JSONArray;
@@ -59,11 +60,13 @@ public class NewDetailJson extends JsonPacket {
      * @return
      * @throws Exception
      */
-    public List<String> readImgList(JSONArray jsonArray) throws Exception {
-        List<String> imgList = new ArrayList<String>();
+    public List<ImageDetailModel> readImgList(JSONArray jsonArray) throws Exception {
+        List<ImageDetailModel> imgList = new ArrayList<ImageDetailModel>();
 
         for (int i = 0; i < jsonArray.length(); i++) {
-            imgList.add(getString("src", jsonArray.getJSONObject(i)));
+            imgList.add(new ImageDetailModel(getString("src", jsonArray.getJSONObject(i)),
+            		getString("alt", jsonArray.getJSONObject(i)),
+            		getString("ref", jsonArray.getJSONObject(i))));
         }
 
         return imgList;
@@ -101,7 +104,7 @@ public class NewDetailJson extends JsonPacket {
 
         JSONArray jsonArray = jsonObject.getJSONArray("img");
 
-        List<String> imgList = readImgList(jsonArray);
+        List<ImageDetailModel> imgList = readImgList(jsonArray);
 
         newDetailModle = new NewsDetailModel();
 

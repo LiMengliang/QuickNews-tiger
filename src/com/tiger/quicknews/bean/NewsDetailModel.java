@@ -39,7 +39,7 @@ public class NewsDetailModel extends BaseModel {
     /**
      * ͼƬ�б�
      */
-    private List<String> imgList;
+    private List<ImageDetailModel> imgList;
 
     public String getCover() {
         return cover;
@@ -101,11 +101,11 @@ public class NewsDetailModel extends BaseModel {
         this.ptime = ptime;
     }
 
-    public List<String> getImgList() {
+    public List<ImageDetailModel> getImgList() {
         return imgList;
     }
 
-    public void setImgList(List<String> imgList) {
+    public void setImgList(List<ImageDetailModel> imgList) {
         this.imgList = imgList;
     }
 }

@@ -12,6 +12,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tiger.quicknews.App;
 import com.tiger.quicknews.R;
+import com.tiger.quicknews.bean.ImageDetailModel;
 import com.tiger.quicknews.bean.NewsDigestModel;
 import com.tiger.quicknews.utils.Options;
 
@@ -84,9 +85,9 @@ public class NewsDigestView extends LinearLayout {
         imageLayout.setVisibility(View.VISIBLE);
         articleLayout.setVisibility(View.GONE);
         itemAbstract.setText(newModle.getTitle());
-        List<String> imageModle = newModle.getImagesModle().getImgList();
-        imageLoader.displayImage(imageModle.get(0), item_image0, options);
-        imageLoader.displayImage(imageModle.get(1), item_image1, options);
-        imageLoader.displayImage(imageModle.get(2), item_image2, options);
+        List<ImageDetailModel> imageModle = newModle.getImagesModle().getImgList();
+        imageLoader.displayImage(imageModle.get(0).src, item_image0, options);
+        imageLoader.displayImage(imageModle.get(1).src, item_image1, options);
+        imageLoader.displayImage(imageModle.get(2).src, item_image2, options);
     }
 }

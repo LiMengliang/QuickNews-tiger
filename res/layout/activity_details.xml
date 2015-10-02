@@ -65,10 +65,19 @@
         android:layout_height="match_parent"
         android:layout_margin="10dip"
         android:layout_below="@+id/new_img"
-        android:visibility="visible"
+        android:visibility="gone"
         android:textSize="16sp"
         android:textColor="@color/item_title"
         android:layout_centerHorizontal="true" />
+    <WebView
+        android:id="@+id/detail_web_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/new_img" 
+        android:visibility="visible"
+        android:layout_centerHorizontal="true"
+        android:background="@color/transparent"/>
+        
 
     <TextView
         android:id="@+id/img_count"

@@ -1,9 +1,14 @@
 
 package com.tiger.quicknews.activity;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -21,6 +26,8 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListe
 import com.tiger.quicknews.R;
 import com.tiger.quicknews.bean.NewsDetailModel;
 import com.tiger.quicknews.bean.NewsDigestModel;
+import com.tiger.quicknews.exception.ConvertionException;
+import com.tiger.quicknews.html.DetailNewsGenerator;
 import com.tiger.quicknews.http.HttpUtil;
 import com.tiger.quicknews.http.UrlUtils;
 import com.tiger.quicknews.http.json.NewDetailJson;
@@ -59,6 +66,8 @@ public class DetailsActivity extends BaseActivity implements ImageLoadingListene
     protected TextView imgCount;
     @ViewById(R.id.play)
     protected ImageView mPlay;
+    @ViewById(R.id.detail_web_view)
+    protected WebView mWebView;
     private String newUrl;
     private NewsDigestModel newModle;
     private String newID;
@@ -68,6 +77,8 @@ public class DetailsActivity extends BaseActivity implements ImageLoadingListene
     protected DisplayImageOptions options;
 
     private NewsDetailModel newDetailModle;
+    
+    // private String newsDetailHtml = null;
 
     @AfterInject
     public void init() {
@@ -77,6 +88,8 @@ public class DetailsActivity extends BaseActivity implements ImageLoadingListene
             newUrl = UrlUtils.getNewsDetailUrl(newID);
             imageLoader = ImageLoader.getInstance();
             options = Options.getListOptions();
+            mWebView.setBackgroundColor(Color.RED);
+            // vmWebView.getSettings().setDefaultTextEncodingName("utf-8");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -97,7 +110,8 @@ public class DetailsActivity extends BaseActivity implements ImageLoadingListene
             // webView.setBackgroundResource(R.color.transparent);
             // webView.setWebViewClient(new MyWebViewClient());
             showProgressDialog();
-            loadData(newUrl);
+            // loadData(newUrl);
+            generateNewsDetailHtml(newUrl);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -133,6 +147,7 @@ public class DetailsActivity extends BaseActivity implements ImageLoadingListene
                 newID);
         if (newDetailModle == null)
             return;
+              
         setCacheStr(newUrl, result);
         if (!"".equals(newDetailModle.getUrl_mp4())) {
             imageLoader.displayImage(newDetailModle.getCover(), newImg, options, this,
@@ -141,7 +156,7 @@ public class DetailsActivity extends BaseActivity implements ImageLoadingListene
         } else {
             if (newDetailModle.getImgList().size() > 0) {
                 imgCountString = "共" + newDetailModle.getImgList().size() + "张";
-                imageLoader.displayImage(newDetailModle.getImgList().get(0), newImg, options, this,
+                imageLoader.displayImage(newDetailModle.getImgList().get(0).src, newImg, options, this,
                         this);
                 newImg.setVisibility(View.VISIBLE);
             }
@@ -158,6 +173,64 @@ public class DetailsActivity extends BaseActivity implements ImageLoadingListene
         dismissProgressDialog();
         // webView.loadDataWithBaseURL(null, content, "text/html", "utf-8",
         // null);
+    }
+
+    @Background
+	public void generateNewsDetailHtml(String newsUrl) {
+    	String result;
+    	try
+    	{
+    		if (HttpUtil.isNetworkAvailable(this)) {
+    			result = HttpUtil.getByHttpClient(this, newsUrl);
+    			setCacheStr(newsUrl, result);
+    		}
+    		else
+    		{
+    			dismissProgressDialog();
+                showShortToast(getString(R.string.not_network));
+                result = getCacheStr(newUrl);
+    		}
+    		newDetailModle = NewDetailJson.instance(this).readJsonNewsDetailModel(result,
+                    newID);
+    		if(newDetailModle == null)
+    		{
+    			return;
+    		}    		
+    		try
+    		{
+    			String newsDetailHtml = new DetailNewsGenerator(this).generateNewsDetailHtml(newDetailModle);
+    			setHtmlToWebView(newsDetailHtml);
+    			newImg.setVisibility(View.GONE);
+    			webView.setVisibility(View.GONE);
+    			mWebView.setVisibility(View.VISIBLE);
+    		}
+    		catch(ConvertionException e)
+    		{
+    			newImg.setVisibility(View.VISIBLE);
+    			webView.setVisibility(View.VISIBLE);
+    			mWebView.setVisibility(View.GONE);
+    			getResult(result);
+    		}
+    		
+    	}
+		catch(IOException e)
+		{
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	finally
+    	{    		
+    	}
+	}
+    
+    @UiThread
+    public void setHtmlToWebView(String html)
+    {
+    	newTitle.setText(newDetailModle.getTitle());
+        newTime.setText("来源：" + newDetailModle.getSource() + " " + newDetailModle.getPtime());
+    	mWebView.loadDataWithBaseURL(null, html, "text/html", "utf-8", null);
+    	dismissProgressDialog();
     }
 
     @Click(R.id.new_img)

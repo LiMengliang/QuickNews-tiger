@@ -19,7 +19,7 @@ public class ImagesModel extends BaseModel {
     /**
      * ͼƬ��
      */
-    private List<String> imgList;
+    private List<ImageDetailModel> imgList;
 
     public String getDocid() {
         return docid;
@@ -37,11 +37,11 @@ public class ImagesModel extends BaseModel {
         this.title = title;
     }
 
-    public List<String> getImgList() {
+    public List<ImageDetailModel> getImgList() {
         return imgList;
     }
 
-    public void setImgList(List<String> imgList) {
+    public void setImgList(List<ImageDetailModel> imgList) {
         this.imgList = imgList;
     }
 }

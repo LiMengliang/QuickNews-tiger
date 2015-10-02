@@ -17,6 +17,7 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListe
 import com.nostra13.universalimageloader.utils.ImageSizeUtils;
 import com.tiger.quicknews.App;
 import com.tiger.quicknews.R;
+import com.tiger.quicknews.bean.ImageDetailModel;
 import com.tiger.quicknews.utils.Options;
 import com.tiger.quicknews.wedget.ProgressButton;
 import com.tiger.quicknews.wedget.photoview.PhotoView;
@@ -55,9 +56,9 @@ public class NewImageView extends RelativeLayout implements ImageLoadingListener
         progress(context);
     }
 
-    public void setImage(List<String> imgList, int position) {
+    public void setImage(List<ImageDetailModel> imgList, int position) {
         currentPage.setText((position + 1) + "/" + imgList.size());
-        imageLoader.displayImage(imgList.get(position), currentImage, options, this,
+        imageLoader.displayImage(imgList.get(position).src, currentImage, options, this,
                 this);
     }
 

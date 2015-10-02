@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import com.tiger.quicknews.R;
 import com.tiger.quicknews.adapter.ImageAdapter;
+import com.tiger.quicknews.bean.ImageDetailModel;
 import com.tiger.quicknews.bean.NewsDetailModel;
 import com.tiger.quicknews.bean.NewsDigestModel;
 import com.tiger.quicknews.wedget.flipview.FlipView;
@@ -31,7 +32,7 @@ public class ImageDetailActivity extends BaseActivity implements OnFlipListener,
     private NewsDigestModel newModle;
     @Bean
     protected ImageAdapter imageAdapter;
-    private List<String> imgList;
+    private List<ImageDetailModel> imgList;
     private NewsDetailModel newDetailModle;
     private String titleString;
 

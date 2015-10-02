@@ -48,7 +48,8 @@
         <activity android:name=".activity.MainActivity_" />
         <activity android:name=".activity.ChannelActivity_" />
         <activity android:name=".activity.DetailsActivity_" 
-            android:theme="@style/SlideAppTheme"/>
+            android:theme="@style/SlideAppTheme"
+            android:hardwareAccelerated="false"/>
         <activity android:name=".activity.ImageDetailActivity_" />
         <activity android:name=".activity.PhotoDetailActivity_" />
         <activity android:name=".activity.TuPianActivity_" />

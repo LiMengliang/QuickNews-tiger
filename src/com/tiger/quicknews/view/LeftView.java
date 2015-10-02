@@ -60,6 +60,11 @@ public class LeftView extends LinearLayout {
         isShow();
     }
 
+    @Click(R.id.user_icon)
+    public void enterUserInfoOrLogIn(View view) {
+    	
+    }
+    
     public void isShow() {
         if (SlidingMenuView.instance().slidingMenu.isMenuShowing()) {
             SlidingMenuView.instance().slidingMenu.showContent();
