@@ -174,15 +174,19 @@ public class BaseChannelListFragment extends BaseFragment implements SwipeRefres
         enterDetailActivity(newModle);
     }
 
-    public void enterDetailActivity(NewsDigestModel newModle) {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("newModle", newModle);
+    public void enterDetailActivity(NewsDigestModel newModle) {        
         Class<?> class1;
         if (newModle.getImagesModle() != null && newModle.getImagesModle().getImgList().size() > 1) {
             class1 = ImageDetailActivity_.class;
         } else {
             class1 = DetailsActivity_.class;
         }
+        if(newModle.getImagesModle() != null && newModle.getImagesModle().getImgList().size() > 1)
+        {
+        	newModle.setImagesModle(null);
+        }
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("newModle", newModle);
         ((BaseActivity) getActivity()).openActivity(class1,
                 bundle, 0);
     }
