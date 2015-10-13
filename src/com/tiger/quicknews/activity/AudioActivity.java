@@ -225,4 +225,7 @@ OnSliderClickListener {
 			map.put(newsModel.getImgsrc(), newsModel);
 		}
 	}
+	
+	private void testGit()
+	{}
 }
