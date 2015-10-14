@@ -227,5 +227,7 @@ OnSliderClickListener {
 	}
 	
 	private void testGit()
-	{}
+	{
+		
+	}
 }
